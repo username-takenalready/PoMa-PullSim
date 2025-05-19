@@ -167,11 +167,11 @@ class Banner:
   def checkPity(self):
     if self.type in ["ticket", "ticketM", "daily", "gym"]:
       return False
-    if self.multis * 11 + self.singles >= 300 and self.type == "mix":
+    if self.multis * 33 + self.singles * 3 >= 300 and self.type == "mix":
       return True
-    elif self.multis * 11 + self.singles >= 400 and self.type != "arcSuitFair":
+    elif self.multis * 33 + self.singles * 3 >= 400 and self.type != "arcSuitFair":
       return True
-    elif self.multis * 11 + self.singles >= 500 and self.type == "arcSuitFair":
+    elif self.multis * 33 + self.singles * 3 >= 500 and self.type == "arcSuitFair":
       return True
     else:
       return False
@@ -181,7 +181,7 @@ class Banner:
     if factor <= self.rates[0]:
       scouted = choice(self.featuredPairs)
     elif factor <= self.rates[1]:
-      scouted = choice(pool5)
+      scouted = choice(self.pool5)
     elif factor <= self.rates[2]:
       scouted = choice(sortByObtain(fourStar, "General"))
     else:
@@ -663,8 +663,8 @@ mixFull = mixExclusive + fiveStarPokeFair + seasonalFull + specialCostume + vari
 action = ""
 
 def searchForPair(text, banner):
-  if not nonick:
-    if text in [pair.name for pair in banner.pairs]:
+  if text in [pair.name for pair in banner.pairs]:
+    if not pair.nonick:
       return pair
   for i in range(len(banner.pairs)):
     if text in banner.pairs[i].nick:
@@ -694,7 +694,7 @@ def bannerSelect(banner: Banner):
     print("(z) Straight to Pity", "(Multi x12 + Single x2)" if not banner.type == "arcSuitFair" else "(Multi x15 + Single x2)")
   print("(b) Back")
   if banner.checkPity():
-    print("\n".join([pair.__str__() for pair in self.pairs]))
+    print("\n".join([pair.__str__() for pair in banner.pairs]))
     print()
     pairChosen = input("Sync pair to pity: >")
     pairChosen = searchForPair(pairChosen, banner) 
