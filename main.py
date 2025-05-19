@@ -48,18 +48,22 @@ def type2color(type):
       return brown
     case "mix":
       return red
+    case "variety":
+      return red
     case "seasonal":
       return green
     case "seasonalRerun":
       return green
     case "costume":
       return green
+    case "2xSC":
+      return green
     case "gym":
       return cyan
     case "daily":
       return cyan
     case _:
-      return
+      return reset()
     
 def rainbow(text):
   str = [bold]
@@ -101,7 +105,7 @@ class Banner:
     self.fiveStarOnly = fiveStarOnly
     self.mixPool = mixPool
     self.dailyPool = dailyPool
-    self.scoutPoint = 0
+    self.pity = False 
     self.singles = 0
     self.multis = 0
     
@@ -139,6 +143,10 @@ class Banner:
       self.rates = [25, 34, 54]
     elif self.type == "ticketM":
       self.rates = [100, 0, 0]
+    elif self.type == "gym":
+      self.rates = [2, 7, 27]
+    elif self.type == "variety":
+      self.rates = [2, 7, 27]
     else:
       raise ValueError("Invalid banner type")
     if fiveStarOnly:
@@ -149,16 +157,31 @@ class Banner:
     elif genPool:
       self.pool5 = fiveStarSpotlight
     if dailyPool:
-      self.featuredPairs = fiveStarMasterFair + fiveStarArcSuitFair + seasonalFull + fiveStarPokeFair # SC added later
+      self.featuredPairs = fiveStarMasterFair + fiveStarArcSuitFair + seasonalFull + fiveStarPokeFair + specialCostume + variety + mixExclusive
+      
+    self.pairs = self.featuredPairs + self.pool5 + sortByObtain(fourStar,"General") + threeStar
+    
   def __str__(self):
-    return "\n".join([pair.__str__() for pair in self.featuredPairs])
-  
+    return "\n".join([pair.__str__() for pair in self.featuredPairs]) if not self.dailyPool else "ALL Sync Pairs up to Feb 2025 (3 months prior)"
+
+  def checkPity(self):
+    if self.type in ["ticket", "ticketM", "daily", "gym"]:
+      return False
+    if self.multis * 11 + self.singles >= 300 and self.type == "mix":
+      return True
+    elif self.multis * 11 + self.singles >= 400 and self.type != "arcSuitFair":
+      return True
+    elif self.multis * 11 + self.singles >= 500 and self.type == "arcSuitFair":
+      return True
+    else:
+      return False
+    
   def single(self):
     factor = uniform(1, 100)
     if factor <= self.rates[0]:
       scouted = choice(self.featuredPairs)
     elif factor <= self.rates[1]:
-      scouted = choice(sortByObtain(fiveStarSpotlight, "General"))
+      scouted = choice(pool5)
     elif factor <= self.rates[2]:
       scouted = choice(sortByObtain(fourStar, "General"))
     else:
@@ -172,7 +195,7 @@ class Banner:
       scouted = self.single()
       print(rainbow(scouted.literal()) if scouted in self.featuredPairs else scouted.__str__())
       scoutMulti.append(scouted)
-      sleep(1)
+      sleep(0.1)
     self.singles -= 11
     self.multis += 1
     return scoutMulti
@@ -575,19 +598,80 @@ specialCostumeDict = {
   "SC Selene": Pair(5, True, "Costume", "Selene (Special Costume)", "Scizor", ["SC Selene", "sc selene"]),
   "SC Lillie": Pair(5, True, "Costume", "Lillie (Special Costume)", "Polteageist-Antique", ["SC Lillie", "sc lillie"]),
   "SC Guzma": Pair(5, True, "Costume", "Guzma (Special Costume)", "Buzzwole", ["SC Guzma", "sc guzma"]),
-  "SC Marine": Pair(5, True, "Costume", "Marnie (Academy)", "Cyclizar", ["SC Marnie", "sc marnie", "AcaMarnie", "acaMarnie", "acamarnie","Marnie Academy"]),
+  "SC Marnie": Pair(5, True, "Costume", "Marnie (Academy)", "Cyclizar", ["SC Marnie", "sc marnie", "AcaMarnie", "acaMarnie", "acamarnie","Marnie Academy"]),
   "SC Sonia": Pair(5, True, "Costume", "Sonia (Special Costume)", "Tsareena", ["SC Sonia", "sc sonia"])
 }
 
 specialCostume = list(specialCostumeDict.values())
 
+varietyDict = {
+  "V.Lorelei": Pair(5, True, "Variety", "Lorelei", "Cloyster", ["V.Lorelei", "v.lorelei"], True),
+  "V.Bruno": Pair(5, True, "Variety", "Bruno", "Onix", ["V.Bruno", "v.bruno"], True),
+  "V.Agatha": Pair(5, True, "Variety", "Agatha", "Arbok", ["V.Agatha", "v.agatha"], True),
+  "V.Lance": Pair(5, True, "Variety", "Lance", "Dragonair", ["V.Lance", "v.lance"], True),
+  "V.Giovanni": Pair(5, True, "Variety", "Giovanni", "Rhydon", ["V.Giovanni", "v.giovanni"], True),
+  "V.Ethan": Pair(5, True, "Variety", "Ethan", "Ho-Oh", ["V.Ethan", "v.ethan"], True),
+  "V.Lyra": Pair(5, True, "Variety", "Lyra", "Vaporeon", ["V.Lyra", "v.lyra"], True),
+  "V.Kris": Pair(5, True, "Variety", "Kris", "Jolteon", ["V.Kris", "v.kris"], True),
+  "V.Falkneer": Pair(5, True, "Variety", "Falkneer", "Noctowl", ["V.Falkneer", "v.falkneer"], True),
+  "V.Archer": Pair(5, True, "Variety", "Archer", "Houndoom", ["V.Archer", "v.archer"], True),
+  "V.Ariana": Pair(5, True, "Variety", "Ariana", "Arbok", ["V.Ariana", "v.ariana"], True),
+  "V.Petrel": Pair(5, True, "Variety", "Petrel", "Weezing", ["V.Petrel", "v.petrel"], True),
+  "V.Proton": Pair(5, True, "Variety", "Proton", "Golbat", ["V.Proton", "v.proton"], True),
+  "V.Noland": Pair(5, True, "Variety", "Noland", "Ninjask", ["V.Noland", "v.noland"], True),
+  "V.Lucas": Pair(5, True, "Variety", "Lucas", "Flareon", ["V.Lucas", "v.lucas"], True),
+  "V.Cynthia": Pair(5, True, "Variety", "Cynthia", "Spiritomb", ["V.Cynthia", "v.cynthia"], True),
+  "V.Thorton": Pair(5, True, "Variety", "Thorton", "Magnezone", ["V.Thorton", "v.thorton"], True),
+  "V.Hilbert": Pair(5, True, "Variety", "Hilbert", "Glaceon", ["V.Hilbert", "v.hilbert"], True),
+  "V.Hilda": Pair(5, True, "Variety", "Hilda", "Leafeon", ["V.Hilda", "v.hilda"], True),
+  "V.Calem": Pair(5, True, "Variety", "Calem", "Sylveon", ["V.Calem", "v.calem"], True),
+  "V.Elio": Pair(5, True, "Variety", "Elio", "Espeon", ["V.Elio", "v.elio"], True),
+  "V.Selene": Pair(5, True, "Variety", "Selene", "Umbreon", ["V.Selene", "v.selene"], True),
+  "V.Kiawe": Pair(5, True, "Variety", "Kiawe", "Arcanine", ["V.Wallace", "v.wallace"], True),
+  "V.Mallow": Pair(5, True, "Variety", "Mallow", "Shiinotic", ["V.Morty", "v.morty"], True),
+  "V.Plumeria": Pair(5, True, "Variety", "Plumeria", "Gengar", ["V.Chuck", "v.chuck"], True),
+  "V.Guzma": Pair(5, True, "Variety", "Guzma", "Ariados", ["V.Jasmine", "v.jasmine"], True),
+  "V.Hop": Pair(5, True, "Variety", "Hop", "Rillaboom", ["V.Rillaboom", "v.rillaboom"], True),
+  "V2.Hop": Pair(5, True, "Variety", "Hop", "Zacian-Crowned", ["V2.Hop", "v2.hop"], True),
+  "V.Marnie": Pair(5, True, "Variety", "Marnie", "Cinderace", ["V.Marnie", "v.marnie"], True),
+  "V.Bede": Pair(5, True, "Variety", "Bede", "Inteleon", ["V.Bede", "v.bede"], True),
+  "V.Ball Guy": Pair(5, True, "Variety", "Ball Guy", "Amoonguss", ["V.Ball Guy", "v.ball guy"], True),
+  "V.Rachel": Pair(5, True, "Variety", "Rachel", "Gimmighoul-Roaming", ["V.Rachel", "v.rachel"], True),
+  "V.Sawyer": Pair(5, True, "Variety", "Sawyer", "Gimmighoul-Chest", ["V.Sawyer", "v.sawyer"], True),
+  "V.Grimsley": Pair(5, True, "Variety", "Grimsley", "Absol", ["V.Grimsley", "v.grimsley"], True)
+}
+
+gymDict = {
+  "Gym Brock": Pair(5, True, "Gym", "Brock", "Kabutops", ["Gym Brock", "gym brock"], True),
+  "Gym Winona": Pair(5, True, "Gym", "Winona", "Altaria", ["Gym Winona", "gym winona"], True),
+  "Gym Grusha": Pair(5, True, "Gym", "Grusha", "Beartic", ["Gym Grusha", "gym grusha"], True),
+  "Gym Whitney": Pair(5, True, "Gym", "Whitney", "Wigglytuff", ["Gym Whitney", "gym whitney"], True),
+  "Gym Korrina": Pair(5, True, "Gym", "Korrina", "Hawlucha", ["Gym Korrina", "gym korrina"], True),
+  "Gym Kabu": Pair(5, True, "Gym", "Kabu", "Ninetales", ["Gym Kabu", "gym kabu"], True)
+}
+
+gymList = list(gymDict.values())
+
+variety = list(varietyDict.values())
+
 seasonalFull = seasonalHoliday + seasonalNewYear + seasonalSpring + seasonalPalentines + seasonalSummer + seasonalFall
 
-mixFull = mixExclusive + fiveStarPokeFair + seasonalFull + specialCostume
+mixFull = mixExclusive + fiveStarPokeFair + seasonalFull + specialCostume + variety
 
 # -----------
 
 action = ""
+
+def searchForPair(text, banner):
+  if not nonick:
+    if text in [pair.name for pair in banner.pairs]:
+      return pair
+  for i in range(len(banner.pairs)):
+    if text in banner.pairs[i].nick:
+      return banner.pairs[i]
+  if text in list(banner.pairs.keys()):
+    return banner.pairs[text]
+  return None
 
 def bannerSelect(banner: Banner):
   print("----------------------------------------")
@@ -598,163 +682,198 @@ def bannerSelect(banner: Banner):
   print("Featured Pair(s):")
   print(banner.__str__())
   print()
-  print("(y) Single")
-  print("(a) Multi")
+  if banner.checkPity():
+    print(blue, "(ENTER) Choose a sync pair", reset())
+  else:
+    print("(x) Single")
+    print("(3) Single x3")
+    print("(5) Single x5")
+  
+  if not banner.type in ["mix", "ticket", "ticketM"]:
+    print("(a) Multi")
+    print("(z) Straight to Pity", "(Multi x12 + Single x2)" if not banner.type == "arcSuitFair" else "(Multi x15 + Single x2)")
   print("(b) Back")
+  if banner.checkPity():
+    print("\n".join([pair.__str__() for pair in self.pairs]))
+    print()
+    pairChosen = input("Sync pair to pity: >")
+    pairChosen = searchForPair(pairChosen, banner) 
+    if pairChosen == None:
+      print("Invalid input.")
+    else:
+      print(rainbow(pairChosen.literal()))
+    return
   match input('> '):
-    case "y":
+    case "x":
       scouted = banner.single()
       print(rainbow(scouted.literal()) if scouted in banner.featuredPairs else scouted.__str__())
+    case "3":
+      for i in range(3):
+        scouted = banner.single()
+        print(rainbow(scouted.literal()) if scouted in banner.featuredPairs else scouted.__str__())
+    case "5":
+      for i in range(5):
+        scouted = banner.single()
+        print(rainbow(scouted.literal()) if scouted in banner.featuredPairs else scouted.__str__())
     case "a":
       banner.multi()
     case "b":
       pass
+    case "z":
+      for i in range(12 if not banner.type == "arcSuitFair" else 15):
+        banner.multi()
+      scouted = banner.single()
+      print(rainbow(scouted.literal()) if scouted in banner.featuredPairs else scouted.__str__())
+      scouted = banner.single()
+      print(rainbow(scouted.literal()) if scouted in banner.featuredPairs else scouted.__str__())
+    case _:
+      print("Invalid input. ")
   awaitEnter()
   if input("Do you want to scout again on this banner? (y/n) \n> ") == "y":
     bannerSelect(banner)
   else:
     pass
 
+bannersDict = {
+  "SS Bede": Banner("Sygna Suit Bede Poke Fair Scout", [fiveStarPokeFairDict["SS Bede"]], "pokeFair"),
+  "ASA": Banner("Arc Suit Alder Arc Suit Fair Scout", [fiveStarArcSuitFairDict["ASA"]], "arcSuitFair"),
+  "Benga": Banner("Benga Poke Fair Scout", [fiveStarPokeFairDict["Benga"]], "pokeFair"),
+  "SS Iono": Banner("Sygna Suit Iono Poke Fair Scout", [fiveStarPokeFairDict["SS Iono"]], "pokeFair"),
+  "SSA Elesa": Banner("Sygna Suit (Alt.) Elesa Poke Fair Scout", [fiveStarPokeFairDict["SSA Elesa"]], "pokeFair"),
+  "NC Rosa": Banner("Rosa (Champion) Master Fair Scout", [fiveStarMasterFairDict["NC Rosa"]], "masterFair"),
+  "may_3xPF": Banner("Triple Feature Poke Fair Scout", [fiveStarPokeFairDict["Red"], fiveStarPokeFairDict["Gloria"], fiveStarPokeFairDict["Marnie"]], "3xPF"),
+  "may_2xSC": Banner("Double Feature Costume Scout", [specialCostumeDict["SC Adaman"], specialCostumeDict["SC Irida"]], "2xSC"),
+  "SS Gladion": Banner("Sygna Suit Gladion Master Fair Scout", [fiveStarMasterFairDict["SS Gladion"]], "masterFair"),
+  "V.Grimsley": Banner("Grimsley Variety Scout", [varietyDict["V.Grimsley"]], "variety"),
+  "vol33": Banner("Vol. 33 Monthly Poke Fair Scout (Larry)", [fiveStarPokeFairDict["Larry"]], "pokeFair"),
+  "SC Rei": Banner("Rei Costume Scout",[specialCostumeDict["SC Rei"]], "costume"),
+  "Lacey": Banner("Lacey Poke Fair Scout", [fiveStarPokeFairDict["Lacey"]], "pokeFair"),
+  "Ilima": Banner("Ilima Spotlight Scout", [Pair(5, True, "General", "Ilima", "Gumshoos", [])], "spotlight"), # dictionary added later
+  "apr_2xPF": Banner("Double Feature Poke Fair Scout", [fiveStarPokeFairDict["Rei"], fiveStarPokeFairDict["Akari"]], "2xPF"),
+  "SC Marnie": Banner("Marnie Costume Scout",[specialCostumeDict['SC Marnie']], "costume"),
+  "SC Morty": Banner("Morty Costume Scout",[specialCostumeDict["SC Morty"]], "costume"),
+  "vol32": Banner("Vol. 32 Monthly Poke Fair Scout (Volo)", [fiveStarPokeFairDict["Volo"]],"pokeFair"),
+  "mar_3xMF": Banner("Triple Feature Master Fair Scout", [fiveStarMasterFairDict["Maxie"], fiveStarMasterFairDict["Archie"], fiveStarMasterFairDict["Leon"]], "3xMF"),
+  "NC May": Banner("May (Champion) Master Fair Scout", [fiveStarMasterFairDict["NC May"]], "masterFair"),
+  "NC Brendan": Banner("Brendan (Champion) Master Fair Scout", [fiveStarMasterFairDict["NC Brendan"]], "masterFair"),
+  "anni Steven": Banner("Steven (Anniversary 2021) Master Fair Scout", [fiveStarMasterFairDict["anni Steven"]], "masterFair"),
+  "ASN": Banner("Arc Suit N Arc Suit Fair Scout", [fiveStarArcSuitFairDict["ASN"]], "arcSuitFair"),
+  "Ortega": Banner("Ortega Poke Fair Scout", [fiveStarPokeFairDict["Ortega"]], "pokeFair"),
+  "teamStar": Banner("Team Star Assemble! Super Spotlight Poke Fair Scout", [fiveStarPokeFairDict["Penny"], fiveStarPokeFairDict["Atticus"], fiveStarPokeFairDict["Ortega"], fiveStarPokeFairDict["Mela"], fiveStarPokeFairDict["Eri"], fiveStarPokeFairDict["Giacomo"]], "superScout"),
+  "NC Nate": Banner("Nate (Champion) Master Fair Scout", [fiveStarMasterFairDict["NC Nate"]], "masterFair"),
+  "vol31": Banner("Vol. 31 Monthly Poke Fair Scout (Raihan)", [fiveStarPokeFairDict["Raihan"]], "pokeFair"),
+  "pal Marley": Banner("Marley (Palentines' 2025) Seasonal Scout", [seasonalPalentinesDict["pal Marley"]], "seasonal"),
+  "pal Erika": Banner("Erika (Palentines' 2025) Seasonal Scout", [seasonalPalentinesDict["pal Erika"]], "seasonal"),
+  "palRerun": Banner("Super Spotlight Seasonal Scout (Palentines')", seasonalPalentines, "seasonalRerun"),
+  "feb_3xPF": Banner("Triple Feature Poke Fair Scout", [fiveStarPokeFairDict["SS Korrina"], fiveStarPokeFairDict["Eusine"], fiveStarPokeFairDict["Ingo"]], "3xPF"),
+  "feb_superScout": Banner("One-Time-Only Fair-Exclusive Guaranteed Scout", [fiveStarPokeFairDict["C.Elesa"], fiveStarPokeFairDict["SS Giovanni"], fiveStarPokeFairDict["Bede"], fiveStarPokeFairDict["Akari"], fiveStarPokeFairDict["Larry"]], "superScout"),
+  "feb_superSpotlight": Banner("Super Spotlight Poke Fair Scout", [fiveStarPokeFairDict["SS Diantha"], fiveStarPokeFairDict["SS Lysandre"], fiveStarPokeFairDict["Anabel"], fiveStarPokeFairDict["Emma"]], "superScout"),
+  "Juliana": Banner("Juliana Master Fair Scout", [fiveStarMasterFairDict["Juliana"]], "masterFair"),
+  "Florian": Banner("Florian Master Fair Scout", [fiveStarMasterFairDict["Florian"]], "masterFair"),
+  "vol30": Banner("Vol. 30 Monthly Poke Fair Scout (Klara)", [fiveStarPokeFairDict["Klara"]], "pokeFair"),
+  "SSA Giovanni": Banner("Sygna Suit (Alt.) Giovanni Master Fair Scout", [fiveStarMasterFairDict["SSA Giovanni"]], "masterFair"),
+  "NY Raihan": Banner("Raihan (New Year's 2025) Seasonal Scout", [seasonalNewYearDict["NY Raihan"]], "seasonal"),
+  "NY Poppy": Banner("Poppy (New Year's 2025) Seasonal Scout", [seasonalNewYearDict["NY Poppy"]], "seasonal"),
+  "NYRerun": Banner("Super Spotlight Seasonal Scout (New Year's)", seasonalNewYear, "seasonalRerun"),
+  "rocketVariety": Banner("Team Rocket Variety Scout", [varietyDict["V.Archer"], varietyDict["V.Ariana"], varietyDict["V.Petrel"], varietyDict["V.Proton"], varietyDict["V.Giovanni"]], "variety"),
+  "jan_3xPF": Banner("Triple Feature Poke Fair Scout", [fiveStarPokeFairDict["Grusha"], fiveStarPokeFairDict["Paulo"], fiveStarPokeFairDict["SS Blue"]], "3xPF"),
+  "Mela": Banner("Mela Poke Fair Scout", [fiveStarPokeFairDict["Mela"]], "pokeFair"),
+  "Atticus": Banner("Atticus Poke Fair Scout", [fiveStarPokeFairDict["Atticus"]], "pokeFair"),
+  "jan_2xPF": Banner("Double Feature Poke Fair Scout", [fiveStarPokeFairDict["SS Piers"], fiveStarPokeFairDict["SS Roxie"]], "2xPF"),
+  "anni N": Banner("N (Anniversary 2021) Master Fair Scout", [fiveStarMasterFairDict["anni N"]], "masterFair"),
+  "vol29": Banner("Vol. 29 Monthly Poke Fair Scout (Iono)", [fiveStarPokeFairDict["Iono"]], "pokeFair")
+}
+
+gymBannersDict = {
+  "A": Banner("Gym Scout (A)", gymList[:3], "gym"),
+  "B": Banner("Gym Scout (B)", gymList[3:], "gym")
+}
+
+mixBannersDict = {
+  "a": Banner("Red Mix Scout", [mixExclusiveDict["mix Red"]], "mix"),
+  "b": Banner("Blue Mix Scout", [mixExclusiveDict["mix Blue"]], "mix"),
+  "c": Banner("Leaf Mix Scout", [mixExclusiveDict["mix Leaf"]], "mix"),
+  "d": Banner("Lucas Mix Scout", [mixExclusiveDict["mix Lucas"]], "mix"),
+  "e": Banner("Dawn Mix Scout", [mixExclusiveDict["mix Dawn"]], "mix")
+}
+
+def gymScout():
+  print("----------------------------------------")
+  print("Choose the gym scout you want to scout on:")
+  print("--- MAY 2025 ---")
+  print("(A) Brock, Winona & Grusha")
+  print("(B) Whitney, Korrina & Kabu")
+  print("Due to technical limitations, a gym scout will have a pool as if it was reran at the present time. It is not possible to simulate the pool of the gym scout at the time of its release (yet).")
+  match input("Which gym scout do you want to scout on? \n> "):
+    case "A":
+      bannerSelect(gymBannersDict["A"])
+    case "B":
+      bannerSelect(gymBannersDict["B"])
+
+def mixScout():
+  print("----------------------------------------")
+  print("Choose the mix scout you want to scout on:")
+  print("--- MAY 2025 ---")
+  print("(a) Red")
+  print("(b) Blue")
+  print("(c) Leaf")
+  print("(d) Lucas")
+  print("(e) Dawn")
+  print("Due to technical limitations, a mix scout will have a pool as if it was reran at the present time. It is not possible to simulate the pool of the mix scout at the time of its release (yet).")
+  match input("Which mix scout do you want to scout on? \n> "):
+    case "a":
+      bannerSelect(mixBannersDict["a"])
+    case "b":
+      bannerSelect(mixBannersDict["b"])
+    case "c":
+      bannerSelect(mixBannersDict["c"])
+    case "d":
+      bannerSelect(mixBannersDict["d"])
+    case "e":
+      bannerSelect(mixBannersDict["e"])
+    case _:
+      print("Invalid input. Please try again.")
+banners = list(bannersDict.values())
+bannerNames = list(bannersDict.keys())
+
+def loopBanners(bannerList: list, newMonth: dict, oldest: str):
+  dummyDict = {}
+  for i in range(len(bannerList)):
+    if bannerNames[i] in list(newMonth.keys()):
+      print(f"--- {newMonth[bannerNames[i]]} ---")
+    dummyDict[str(i+1)] = bannerList[i]
+    print(f"({i+1}) {bannerList[i].name}")
+  print("BANNERS OLDER THAN " + oldest + " ARE YET TO BE AVAILABLE")
+  print()
+  print("--- MISC ---")
+  print(f"(#) {cyan}Gym Scout(s){reset()}")
+  print(f"(!) {red}Mix Scout(s){reset()}")
+  print(f"(@) {cyan}Daily Scout{reset()}")
+  print(f"($) {brown}5* Guaranteed Ticket Scout{reset()}")
+  print()
+  print("Due to technical limitations, a banner will have a pool as if it was reran at the present time. It is not possible to simulate the pool of the banner at the time of its release (yet).")
+  return dummyDict
+
 def startSim():
   print("----------------------------------------")
   print("Choose the banner you want to scout on:")
   print("--- MAY 2025 ---")
-  print("(a) Sygna Suit Bede Poke Fair Scout - Ongoing")
-  print("(b) Arc Suit Alder Arc Suit Fair Scout - Ongoing")
-  print("(c) Benga Poke Fair Scout - Ongoing")
-  print("(d) Sygna Suit Iono Poke Fair Scout")
-  print("(e) Sygna Suit (Alt.) Elesa Poke Fair Scout")
-  print("(f) Rosa (Champion) Master Fair Scout - Ongoing")
-  print("(g) Triple Feature Poke Fair Scout")
-  print("(h) Double Feature Costume Scout")
-  print("(i) Sygna Suit Gladion Master Fair Scout")
-  print("(j) Vol. 33 Monthly Poke Fair Scout (Larry)")
-  print("--- APR 2025 ---")
-  print("(k) Rei Costume Scout")
-  print("(l) Lacey Poke Fair Scout")
-  print("(m) Ilima Spotlight Scout")
-  print("(n) Double Feature Poke Fair Scout")
-  print("(o) [UNDER CONSTRUCTION]")
-  print("(p) Marnie Costume Scout")
-  print("(q) Morty Costume Scout")
-  print("(r) [UNDER CONSTRUCTION]")
-  print("(s) Vol. 32 Monthly Poke Fair Scout (Volo)")
-  print("--- MAR 2025 (5.5th anni) ---")
-  print("(t) [UNDER CONSTRUCTION]")
-  print("(u) Triple Feature Master Fair Scout")
-  print("(v) May (Champion) Master Fair Scout")
-  print("(w) Brendan (Champion) Master Fair Scout")
-  print("(x) Steven (Anniversary 2021) Master Fair Scout")
-  print("(y) [UNDER CONSTRUCTION]")
-  print("(z) Arc Suit N Arc Suit Fair Scout")
-  print("(aa) [UNDER CONSTRUCTION]")
-  print("(ab) Ortega Poke Fair Scout")
-  print("(ac) Team Star Assemble! Super Spotlight Poke Fair Scout")
-  print("(ad) Nate (Champion) Master Fair Scout")
-  print("(ae) Vol. 31 Monthly Poke Fair Scout (Raihan)")
-  print("--- FEB 2025 (Pre-5.5th anni) (Palentines' 2025) ---")
-  print("(af) Marley (Palentines' 2025) Seasonal Scout")
-  print("(ag) Erika (Palentines' 2025) Seasonal Scout")
-  print("(ah) Super Spotlight Seasonal Scout (Palentines')")
-  print("(ai) Triple Feature Poke Fair Scout")
-  print("(aj) One-Time-Only Fair-Exclusive Guaranteed Scout (No Guarantee, acts as Super Scout)")
-  print("(ak) Super Spotlight Poke Fair Scout")
-  print("(al) Juliana Master Fair Scout")
-  print("(am) Florian Master Fair Scout")
-  print("(an) Triple Feature Poke Fair Scout")
-  print("(ao) Lillie (Anniversary 2021) Master Fair Scout")
-  print("(ap) Vol. 30 Monthly Poke Fair Scout (Diantha)")
-  # print("--- JAN 2025 ---")
-  # jan 2025 units
-  print("BANNERS OLDER THAN Pre-5.5th Anniversary // Palentines' 2025 ARE YET TO BE AVAILABLE")
-  print()
-  print("(#) [UNDER CONSTRUCTION]")
-  print("(!) [UNDER CONSTRUCTION]")
-  print(f"(@) {cyan}Daily Scout (NO VARIETIES YET){reset()}")
-  print(f"($) {brown}5* Guaranteed Ticket Scout{reset()}")
-  print()
-  print("Due to technical limitations, a banner will have a pool as if it was reran at the present time. It is not possible to simulate the pool of the banner at the time of its release (yet).")
-  match input("Which banner do you want to scout on? \n> "):
-    case "a":
-      bannerSelect(Banner("Sygna Suit Bede Poke Fair Scout", [fiveStarPokeFairDict["SS Bede"]], "pokeFair"))
-    case "b":
-      bannerSelect(Banner("Arc Suit Alder Arc Suit Fair Scout", [fiveStarArcSuitFairDict["ASA"]], "arcSuitFair"))
-    case "c":
-      bannerSelect(Banner("Benga Poke Fair Scout", [fiveStarPokeFairDict["Benga"]], "pokeFair"))
-    case "d":
-      bannerSelect(Banner("Sygna Suit Iono Poke Fair Scout", [fiveStarPokeFairDict["SS Iono"]], "pokeFair"))
-    case "e":
-      bannerSelect(Banner("Sygna Suit (Alt.) Elesa Poke Fair Scout", [fiveStarPokeFairDict["SSA Elesa"]], "pokeFair"))
-    case "f":
-      bannerSelect(Banner("Rosa (Champion) Master Fair Scout", [fiveStarMasterFairDict["SS Rosa"]], "masterFair"))
-    case "g":
-      bannerSelect(Banner("Triple Feature Poke Fair Scout", [fiveStarPokeFairDict["Red"], fiveStarPokeFairDict["Gloria"], fiveStarPokeFairDict["Marnie"]], "3xPF"))
-    case "h":
-      bannerSelect(Banner("Double Feature Costume Scout", [specialCostumeDict["SC Adaman"], specialCostumeDict["SC Irida"]], "2xSC"))
-    case "i":
-      bannerSelect(Banner("Sygna Suit Gladion Master Fair Scout", [fiveStarMasterFairDict["SS Gladion"]], "masterFair"))
-    case "j":
-      bannerSelect(Banner("Vol. 33 Monthly Poke Fair Scout (Larry)", [fiveStarPokeFairDict["Larry"]], "pokeFair"))
-    case "k":
-      bannerSelect(Banner("Rei Costume Scout",[specialCostumeDict["SC Rei"]], "costume"))
-    case "l":
-      bannerSelect(Banner("Lacey Poke Fair Scout", [fiveStarPokeFairDict["Lacey"]], "pokeFair"))
-    case "m":
-      bannerSelect(Banner("Ilima Spotlight Scout", [Pair(5, True, "General", "Ilima", "Gumshoos", [])], "spotlight")) # dictionary added later
-    case "n":
-      bannerSelect(Banner("Double Feature Poke Fair Scout", [fiveStarPokeFairDict["Rei"], fiveStarPokeFairDict["Akari"]], "2xPF"))
-    case "p":
-      bannerSelect(Banner("Marnie Costume Scout",[specialCostumeDict["Marnie"]], "costume"))
-    case "q":
-      bannerSelect(Banner("Morty Costume Scout",[specialCostumeDict["Morty"]], "costume"))
-    case "s":
-      bannerSelect(Banner("Vol. 32 Monthly Poke Fair Scout (Volo)", [fiveStarPokeFairDict["Volo"]],"pokeFair"))
-    case "u":
-      bannerSelect(Banner("Triple Feature Master Fair Scout", [fiveStarMasterFairDict["Maxie"], fiveStarMasterFairDict["Archie"], fiveStarMasterFairDict["Leon"]], "3xMF"))
-    case "v":
-      bannerSelect(Banner("May (Champion) Master Fair Scout", [fiveStarMasterFairDict["NC May"]], "masterFair"))
-    case "w":
-      bannerSelect(Banner("Brendan (Champion) Master Fair Scout", [fiveStarMasterFairDict["NC Brendan"]], "masterFair"))
-    case "x":
-      bannerSelect(Banner("Steven (Anniversary 2021) Master Fair Scout", [fiveStarMasterFairDict["anni Steven"]], "masterFair"))
-    case "z":
-      bannerSelect(Banner("Arc Suit N Arc Suit Fair Scout", [fiveStarArcSuitFairDict["ASN"]], "arcSuitFair"))
-    case "ab":
-      bannerSelect(Banner("Ortega Poke Fair Scout", [fiveStarPokeFairDict["Ortega"]], "pokeFair"))
-    case "ac":
-      bannerSelect(Banner("Team Star Assemble! Super Spotlight Poke Fair Scout", [fiveStarPokeFairDict["Penny"], fiveStarPokeFairDict["Atticus"], fiveStarPokeFairDict["Ortega"], fiveStarPokeFairDict["Mela"], fiveStarPokeFairDict["Eri"], fiveStarPokeFairDict["Giacomo"]], "superScout"))
-    case "ad":
-      bannerSelect(Banner("Nate (Champion) Master Fair Scout", [fiveStarMasterFairDict["NC Nate"]], "masterFair"))
-    case "ae":
-      bannerSelect(Banner("Vol. 31 Monthly Poke Fair Scout (Raihan)", [fiveStarPokeFairDict["Raihan"]], "pokeFair"))
-    case "af":
-      bannerSelect(Banner("Marley (Palentines' 2025) Seasonal Scout", [seasonalPalentinesDict["pal Marley"]], "seasonal"))
-    case "ag":
-      bannerSelect(Banner("Erika (Palentines' 2025) Seasonal Scout", [seasonalPalentinesDict["pal Erika"]], "seasonal"))
-    case "ah":
-      bannerSelect(Banner("Super Spotlight Seasonal Scout (Palentines')", seasonalPalentines, "seasonalRerun"))
-    case "ai":
-      bannerSelect(Banner("Triple Feature Poke Fair Scout", [fiveStarPokeFairDict["SS Korrina"], fiveStarPokeFairDict["Eusine"], fiveStarPokeFairDict["Ingo"]], "3xPF"))
-    case "aj":
-      bannerSelect(Banner("One-Time-Only Fair-Exclusive Guaranteed Scout", [fiveStarPokeFairDict["C.Elesa"], fiveStarPokeFairDict["SS Giovanni"], fiveStarPokeFairDict["Bede"], fiveStarPokeFairDict["Akari"], fiveStarPokeFairDict["Larry"]], "superScout"))
-    case "ak":
-      bannerSelect(Banner("Super Spotlight Poke Fair Scout", [fiveStarPokeFairDict["SS Diantha"], fiveStarPokeFairDict["SS Lysandre"], fiveStarPokeFairDict["Anabel"], fiveStarPokeFairDict["Emma"]], "superScout"))
-    case "al":
-      bannerSelect(Banner("Juliana Master Fair Scout", [fiveStarMasterFairDict["Juliana"]], "masterFair"))
-    case "am":
-      bannerSelect(Banner("Florian Master Fair Scout", [fiveStarMasterFairDict["Florian"]], "masterFair"))
-    case "an":
-      bannerSelect(Banner("Triple Feature Poke Fair Scout", [fiveStarPokeFairDict["Nemona"], fiveStarPokeFairDict["Penny"], fiveStarPokeFairDict["Arven"]], "3xPF"))
-    case "ao":
-      bannerSelect(Banner("Lillie (Anniversary 2021) Master Fair Scout", [fiveStarMasterFairDict["anni Lillie"]], "masterFair"))
-    case "ap":
-      bannerSelect(Banner("Vol. 30 Monthly Poke Fair Scout (Diantha)", [fiveStarPokeFairDict["Diantha"]], "pokeFair"))
-    case "@":
-      bannerSelect(Banner("Daily Scout", [], "daily", dailyPool = True))
-    case "$":
-      bannerSelect(Banner("5* Guaranteed Ticket Scout", [], "pokeFair", fiveStarOnly = True))
-    case _:
-      print("Invalid input. Please try again.")
+  dummyDict = loopBanners(banners, {"SC Rei": "Apr 2025", "mar_3xMF": "Mar 2025 (5.5th Anni)", "pal Marley": "Feb 2025 (Pre-anni 5.5th) (Palentines' 2025)", "SSA Giovanni": "Jan 2025 (New Years' 2025)"}, "2025")
+  target = input("Which banner do you want to scout on? \n> ")
+  if target in list(dummyDict.keys()):
+    bannerSelect(dummyDict[target])
+  else:
+    match target:
+      case "#":
+        gymScout()
+      case "!":
+        mixScout()
+      case "@":
+        bannerSelect(Banner("Daily Scout", [], "daily", dailyPool = True))
+      case "$":
+        bannerSelect(Banner("5* Guaranteed Ticket Scout", [], "pokeFair", fiveStarOnly = True))
+      case _:
+        print("Invalid input. Please try again.")
     
 
 def menu():
@@ -787,16 +906,17 @@ def menu():
       print("5* Poke Fair: 97/97 [COMPLETED]")
       print("5* Event Exclusive: 0/??")
       print("5* BP: 0/??")
-      print("5* Variety: 0/34 (Priority: #3)")
+      print("5* Variety: 34/34 [COMPLETED]")
       print("5* Damage Challenge: 0/??")
       print("5* Seasonal: 54/54 [COMPLETED]")
       print("5* Mix: 5/5 [COMPLETED]")
-      print("5* Special Costume: 0/22 (Priority: #1)")
+      print("5* Special Costume: 22/22 [COMPLETED]")
       print("5* Master Fair: 39/39 [COMPLETED]")
       print("5* Arc Suit Fair: 6/6 [COMPLETED]")
-      print("Gym Scout: 0/6 (Priority: #2)")
+      print("Gym Scout: 6/6 [COMPLETED]")
     case "l":
       print("----------------------------------------")
+      print("[WILL ADD IN v2.1.0]")
       print("v1.0.0")
       print("- Initial release")
     case _:
