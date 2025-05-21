@@ -3,6 +3,7 @@
 from random import uniform, choice
 from time import sleep
 from os import system
+from math import floor
 
 red = "\033[0;31m"
 blue = "\033[0;34m"
@@ -177,7 +178,7 @@ class Banner:
       return False
     
   def single(self):
-    factor = uniform(1, 100)
+    factor = floor(uniform(1, 100))
     if factor <= self.rates[0]:
       scouted = choice(self.featuredPairs)
     elif factor <= self.rates[1]:
@@ -663,14 +664,14 @@ mixFull = mixExclusive + fiveStarPokeFair + seasonalFull + specialCostume + vari
 action = ""
 
 def searchForPair(text, banner):
-  if text in [pair.name for pair in banner.pairs]:
-    if not pair.nonick:
-      return pair
+  for i in range(len(banner.pairs)):
+    if text in banner.pairs[i].name and banner.pairs[i].nonick:
+      return banner.pairs[i]
   for i in range(len(banner.pairs)):
     if text in banner.pairs[i].nick:
       return banner.pairs[i]
-  if text in list(banner.pairs.keys()):
-    return banner.pairs[text]
+  # if text in banner.pairs:
+    # return banner.pairs[text]
   return None
 
 def bannerSelect(banner: Banner):
@@ -689,7 +690,7 @@ def bannerSelect(banner: Banner):
     print("(3) Single x3")
     print("(5) Single x5")
   
-  if not banner.type in ["mix", "ticket", "ticketM"]:
+  if banner.type not in ["mix", "ticket", "ticketM"]:
     print("(a) Multi")
     print("(z) Straight to Pity", "(Multi x12 + Single x2)" if not banner.type == "arcSuitFair" else "(Multi x15 + Single x2)")
   print("(b) Back")
@@ -702,6 +703,8 @@ def bannerSelect(banner: Banner):
       print("Invalid input.")
     else:
       print(rainbow(pairChosen.literal()))
+      banner.multis = 0
+      banner.singles = 0
     return
   match input('> '):
     case "x":
