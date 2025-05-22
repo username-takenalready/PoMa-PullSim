@@ -242,6 +242,8 @@ threeStarDict = {
   "Mina": Pair(3, True, "General", "Mina", "Granbull", [])
 }
 
+threeStar = list(threeStarDict.values())
+
 fourStarDict = {
   "Blaine": Pair(4, False, "General", "Blaine", "Rapidash", []),
   "Lucy": Pair(4, False, "General", "Lucy", "Seviper", []),
@@ -970,6 +972,8 @@ def menu():
   print("(x) Sync Pair Addition Progress")
   print("(l) Update Log")
   print("(q) Quit")
+  print()
+  print("Tip: Scouting is too slow/fast? Change it in settings!")
   action = input("> ")
   match action:
     case "a":
