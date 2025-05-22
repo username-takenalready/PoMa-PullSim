@@ -18,6 +18,8 @@ grey = "\033[1;30m"
 
 rainbowList = [red, yellow, green, blue, cyan, magenta]
 
+pullInt = 0.2
+
 def stars2color(stars):
   match stars:
     case 3:
@@ -51,11 +53,19 @@ def type2color(type):
       return red
     case "variety":
       return red
+    case "2xV":
+      return red
+    case "3xV":
+      return red
+    case "superVariety":
+      return red
     case "seasonal":
       return green
     case "seasonalRerun":
       return green
     case "costume":
+      return green
+    case "superCostume":
       return green
     case "2xSC":
       return green
@@ -134,6 +144,8 @@ class Banner:
       self.rates = [2, 10, 30] # maybe?
     elif self.type == "costume":
       self.rates = [2, 7, 27]
+    elif self.type == "superCostume":
+      self.rates = [2, 7, 27]
     elif self.type == "2xSC":
       self.rates = [3, 7, 27]
     elif self.type == "seasonal":
@@ -147,6 +159,12 @@ class Banner:
     elif self.type == "gym":
       self.rates = [2, 7, 27]
     elif self.type == "variety":
+      self.rates = [2, 7, 27]
+    elif self.type == "2xV":
+      self.rates = [3, 7, 27]
+    elif self.type == "3xV":
+      self.rates = [4.5, 7, 27]
+    elif self.type == "superVariety":
       self.rates = [2, 7, 27]
     else:
       raise ValueError("Invalid banner type")
@@ -196,136 +214,140 @@ class Banner:
       scouted = self.single()
       print(rainbow(scouted.literal()) if scouted in self.featuredPairs else scouted.__str__())
       scoutMulti.append(scouted)
-      sleep(0.1)
+      sleep(pullInt)
     self.singles -= 11
     self.multis += 1
     return scoutMulti
 
-threeStar = [
-  Pair(3, False, "General", "Brawly", "Makuhita", []),
-  Pair(3, False, "General", "Winona", "Pelipper", []),
-  Pair(3, False, "General", "Tate", "Solrock", []),
-  Pair(3, False, "General", "Liza", "Lunatone", []),
-  Pair(3, False, "General", "Maylene", "Meditite", []),
-  Pair(3, False, "General", "Crasher Wake", "Floatzel", []),
-  Pair(3, False, "General", "Brycen", "Cryogonal", []),
-  Pair(3, False, "General", "Marlon", "Carracosta", []),
-  Pair(3, False, "General", "Ramos", "Weepinbell", []),
-  Pair(3, False, "General", "Wulfric", "Avalugg", []),
-  Pair(3, True, "General", "Lt. Surge", "Voltorb", []),
-  Pair(3, True, "General", "Bugsy", "Beedril", []),
-  Pair(3, True, "General", "Janine", "Ariados", []),
-  Pair(3, True, "General", "Roxanne", "Nosepass", []),
-  Pair(3, True, "General", "Roark", "Cranidos", []),
-  Pair(3, True, "General", "Candice", "Abomasnow", []),
-  Pair(3, True, "General", "Cheryl", "Chansey", []),
-  Pair(3, True, "General", "Marley", "Arcanine", []),
-  Pair(3, True, "General", "Clan", "Palpitoad", []),
-  Pair(3, True, "General", "Mina", "Granbull", [])
-]
+threeStarDict = {
+  "Brawly": Pair(3, False, "General", "Brawly", "Makuhita", []),
+  "Winona": Pair(3, False, "General", "Winona", "Pelipper", []),
+  "Tate": Pair(3, False, "General", "Tate", "Solrock", []),
+  "Liza": Pair(3, False, "General", "Liza", "Lunatone", []),
+  "Maylene": Pair(3, False, "General", "Maylene", "Meditite", []),
+  "Crasher Wake": Pair(3, False, "General", "Crasher Wake", "Floatzel", []),
+  "Brycen": Pair(3, False, "General", "Brycen", "Cryogonal", []),
+  "Marlon": Pair(3, False, "General", "Marlon", "Carracosta", []),
+  "Ramos": Pair(3, False, "General", "Ramos", "Weepinbell", []),
+  "Wulfric": Pair(3, False, "General", "Wulfric", "Avalugg", []),
+  "Lt. Surge": Pair(3, True, "General", "Lt. Surge", "Voltorb", []),
+  "Bugsy": Pair(3, True, "General", "Bugsy", "Beedril", []),
+  "Janine": Pair(3, True, "General", "Janine", "Ariados", []),
+  "Roxanne": Pair(3, True, "General", "Roxanne", "Nosepass", []),
+  "Roark": Pair(3, True, "General", "Roark", "Cranidos", []),
+  "Candice": Pair(3, True, "General", "Candice", "Abomasnow", []),
+  "Cheryl": Pair(3, True, "General", "Cheryl", "Chansey", []),
+  "Marley": Pair(3, True, "General", "Marley", "Arcanine", []),
+  "Clan": Pair(3, True, "General", "Clan", "Palpitoad", []),
+  "Mina": Pair(3, True, "General", "Mina", "Granbull", [])
+}
 
-fourStar = [
-  Pair(4, False, "General", "Blaine", "Rapidash", []),
-  Pair(4, False, "General", "Lucy", "Seviper", []),
-  Pair(4, False, "General", "Grant", "Amaura", []),
-  Pair(4, True, "General", "Kahili", "Toucannon", []),
-  Pair(4, True, "General", "Lorelei", "Lapras", []),
-  Pair(4, True, "General", "Bruno", "Machomp", []),
-  Pair(4, True, "General", "Agatha", "Gengar", []),
-  Pair(4, True, "General", "Will", "Xatu", []),
-  Pair(4, True, "General", "Drake", "Salamence", []),
-  Pair(4, True, "General", "Thorton", "Bronzong", []),
-  Pair(4, True, "General", "Shauntal", "Chandelure", []),
-  Pair(4, True, "General", "Wikstrom", "Aegislash", []),
-  Pair(4, True, "General", "Sophocles", "Togedemaru", []),
-  Pair(4, True, "Fair-Exclusive", "Rachel", "Umbreon", []),
-  Pair(4, True, "Fair-Exclusive", "Sawyer", "Honchkrow", []),
-  Pair(4, True, "Fair-Exclusive", "Tina", "Flareon", []),
-  Pair(4, False, "General", "Whitney", "Miltank", []),
-  Pair(4, False, "General", "Gardenia", "Roserade", []),
-  Pair(4, False, "General", "Roxie", "Scolipede", []),
-  Pair(4, False, "General", "Siebold", "Clawitzer", []),
-  Pair(4, False, "General", "Noland", "Pinsir", []),
-  Pair(4, False, "General", "Marshal", "Conkeldurr", [])
-]
+fourStarDict = {
+  "Blaine": Pair(4, False, "General", "Blaine", "Rapidash", []),
+  "Lucy": Pair(4, False, "General", "Lucy", "Seviper", []),
+  "Grant": Pair(4, False, "General", "Grant", "Amaura", []),
+  "Kahili": Pair(4, True, "General", "Kahili", "Toucannon", []),
+  "Lorelei": Pair(4, True, "General", "Lorelei", "Lapras", []),
+  "Bruno": Pair(4, True, "General", "Bruno", "Machomp", []),
+  "Agatha": Pair(4, True, "General", "Agatha", "Gengar", []),
+  "Will": Pair(4, True, "General", "Will", "Xatu", []),
+  "Drake": Pair(4, True, "General", "Drake", "Salamence", []),
+  "Thorton": Pair(4, True, "General", "Thorton", "Bronzong", []),
+  "Shauntal": Pair(4, True, "General", "Shauntal", "Chandelure", []),
+  "Wikstrom": Pair(4, True, "General", "Wikstrom", "Aegislash", []),
+  "Sophocles": Pair(4, True, "General", "Sophocles", "Togedemaru", []),
+  "Rachel": Pair(4, True, "Fair-Exclusive", "Rachel", "Umbreon", []),
+  "Honchkrow": Pair(4, True, "Fair-Exclusive", "Sawyer", "Honchkrow", []),
+  "Tina": Pair(4, True, "Fair-Exclusive", "Tina", "Flareon", []),
+  "Whitney": Pair(4, False, "General", "Whitney", "Miltank", []),
+  "Gardenia": Pair(4, False, "General", "Gardenia", "Roserade", []),
+  "Roxie": Pair(4, False, "General", "Roxie", "Scolipede", []),
+  "Siebold": Pair(4, False, "General", "Siebold", "Clawitzer", []),
+  "Noland": Pair(4, False, "General", "Noland", "Pinsir", []),
+  "Marshal": Pair(4, False, "General", "Marshal", "Conkeldurr", [])
+}
 
-fiveStarSpotlight = [
-  Pair(5, True, "General", "Blue", "Pidgeot", []),
-  Pair(5, True, "General", "Leaf", "Eevee", []),
-  Pair(5, True, "General", "Sygna Suit Misty", "Vaporeon", ["SS Misty", "ss misty"]),
-  Pair(5, True, "General", "Sygna Suit Erika", "Leafeon", ["SS Erika", "ss erika"]),
-  Pair(5, True, "General", "Sabrina", "Alakazam", []),
-  Pair(5, True, "General", "Ethan", "Cyndaquil", []),
-  Pair(5, True, "General", "Lyra", "Chikorita", []),
-  Pair(5, True, "General", "Kris", "Totodile", []),
-  Pair(5, True, "General", "Falkneer", "Swellow", []),
-  Pair(5, True, "General", "Morty", "Drifblim", []),
-  Pair(5, True, "General", "Chuck", "Poliwrath", []),
-  Pair(5, True, "General", "Jasmine", "Steelix", []),
-  Pair(5, True, "General", "Karen", "Houndoom", []),
-  Pair(5, True, "General", "Brendan", "Treecko", []),
-  Pair(5, True, "General", "May", "Mudkip", []),
-  Pair(5, True, "General", "Wally", "Gallade", []),
-  Pair(5, True, "General", "Wallace", "Milotic", []),
-  Pair(5, True, "General", "Sidney", "Absol", []),
-  Pair(5, True, "General", "Phoebe", "Dusclops", []),
-  Pair(5, True, "General", "Glacia", "Glalie", []),
-  Pair(5, True, "General", "Lisia", "Altaria", []),
-  Pair(5, True, "General", "Courtney", "Camerupt", []),
-  Pair(5, True, "General", "Dawn", "Turtwig", []),
-  Pair(5, True, "General", "Fantina", "Mismagius", []),
-  Pair(5, True, "General", "Volkneer", "Luxray", []),
-  Pair(5, True, "General", "Aaron", "Vespiquen", []),
-  Pair(5, True, "General", "Bertha", "Hippowdon", []),
-  Pair(5, True, "General", "Lucian", "Girafarig", []),
-  Pair(5, True, "General", "Darach", "Staraptor", []),
-  Pair(5, True, "General", "Hilbert", "Oshawott", []),
-  Pair(5, True, "General", "Hilda", "Tepig", []),
-  Pair(5, True, "General", "Bianca", "Musharna", []),
-  Pair(5, True, "General", "Nate", "Braviary", []),
-  Pair(5, True, "General", "Hugh", "Buffalant", []),
-  Pair(5, True, "General", "Lenora", "Watchog", []),
-  Pair(5, True, "General", "Burgh", "Leavanny", []),
-  Pair(5, True, "General", "Elesa", "Zebstrika", []),
-  Pair(5, True, "General", "Sygna Suit Elesa", "Rotom", ["SS Elesa","ss elesa"]),
-  Pair(5, True, "General", "Caitlin", "Reuniclus", []),
-  Pair(5, True, "General", "Grimsley", "Liepard", []),
-  Pair(5, True, "General", "Sygna Suit Grimsley", "Sharpedo", ["SS Grimsley","ss grimsley"]),
-  Pair(5, True, "General", "Colress", "Klinklang", []),
-  Pair(5, True, "General", "Serena", "Fennekin", []),
-  Pair(5, True, "General", "Tierno", "Crawdaunt", []),
-  Pair(5, True, "General", "Trevor", "Florges", []),
-  Pair(5, True, "General", "Shauna", "Chesnaught", []),
-  Pair(5, True, "General", "Clemont", "Heliolisk", []),
-  Pair(5, True, "General", "Olympia", "Sigilyph", []),
-  Pair(5, True, "General", "Malva", "Talonflame", []),
-  Pair(5, True, "General", "Drasna", "Dragalge", []),
-  Pair(5, True, "General", "Looker", "Croagunk", []),
-  Pair(5, True, "General", "Elio", "Popplio", []),
-  Pair(5, True, "General", "Selene", "Rowlet", []),
-  Pair(5, True, "General", "Lillie", "Clefairy", []),
-  Pair(5, True, "General", "Gladion", "Silvally", []),
-  Pair(5, True, "General", "Ilima", "Gumshoos", []),
-  Pair(5, True, "General", "Lana", "Araquanid", []),
-  Pair(5, True, "General", "Kiawe", "Marowak-Alola", []),
-  Pair(5, True, "General", "Mallow", "Tsareena", []),
-  Pair(5, True, "General", "Hala", "Crabominable", []),
-  Pair(5, True, "General", "Olivia", "Lycanroc-Midnight", []),
-  Pair(5, True, "General", "Grimsley (Kimono)", "Bisharp", ["Grimsley Kimono","Grimsley Alt", "AltGrimsley", "KimonoGrimsley", "kimonoGrimsley", "AGrimsley"]),
-  Pair(5, True, "General", "Ryuki", "Turtnator", []),
-  Pair(5, True, "General", "Lusamine", "Pheromosa", []),
-  Pair(5, True, "General", "Plumeria", "Salazzle", []),
-  Pair(5, True, "General", "Guzma", "Golisopod", []),
-  Pair(5, True, "General", "Kukui", "Lycanroc-Midday", []),
-  Pair(5, True, "General", "The Masked Royal", "Incineroar", ["AltKukui", "AKukui", "MaskedRoyal", "MaskKukui", "Masked Royal"]),
-  Pair(5, True, "General", "Nessa", "Drednaw", []),
-  Pair(5, True, "General", "Bea", "Sirfetch'd", []),
-  Pair(5, True, "General", "Allister", "Gengar", []),
-  Pair(5, True, "General", "Gordie", "Coalossal", []),
-  Pair(5, True, "General", "Melony", "Lapras", []),
-  Pair(5, True, "General", "Piers", "Obstagoon", []),
-  Pair(5, True, "General", "Sonia", "Yamper", [])
-]
+fourStar = list(fourStarDict.values())
+
+fiveStarSpotlightDict = {
+  "Blue": Pair(5, True, "General", "Blue", "Pidgeot", []),
+  "Leaf": Pair(5, True, "General", "Leaf", "Eevee", []),
+  "SS Misty": Pair(5, True, "General", "Sygna Suit Misty", "Vaporeon", ["SS Misty", "ss misty"]),
+  "SS Erika": Pair(5, True, "General", "Sygna Suit Erika", "Leafeon", ["SS Erika", "ss erika"]),
+  "Sabrina": Pair(5, True, "General", "Sabrina", "Alakazam", []),
+  "Ethan": Pair(5, True, "General", "Ethan", "Cyndaquil", []),
+  "Lyra": Pair(5, True, "General", "Lyra", "Chikorita", []),
+  "Kris": Pair(5, True, "General", "Kris", "Totodile", []),
+  "Falkneer": Pair(5, True, "General", "Falkneer", "Swellow", []),
+  "Morty": Pair(5, True, "General", "Morty", "Drifblim", []),
+  "Chuck": Pair(5, True, "General", "Chuck", "Poliwrath", []),
+  "Jasmine": Pair(5, True, "General", "Jasmine", "Steelix", []),
+  "Karen": Pair(5, True, "General", "Karen", "Houndoom", []),
+  "Brendan": Pair(5, True, "General", "Brendan", "Treecko", []),
+  "May": Pair(5, True, "General", "May", "Mudkip", []),
+  "Wally": Pair(5, True, "General", "Wally", "Gallade", []),
+  "Wallace": Pair(5, True, "General", "Wallace", "Milotic", []),
+  "Sidney": Pair(5, True, "General", "Sidney", "Absol", []),
+  "Phoebe": Pair(5, True, "General", "Phoebe", "Dusclops", []),
+  "Glacia": Pair(5, True, "General", "Glacia", "Glalie", []),
+  "Lisia": Pair(5, True, "General", "Lisia", "Altaria", []),
+  "Courtney": Pair(5, True, "General", "Courtney", "Camerupt", []),
+  "Dawn": Pair(5, True, "General", "Dawn", "Turtwig", []),
+  "Fantina": Pair(5, True, "General", "Fantina", "Mismagius", []),
+  "Volkneer": Pair(5, True, "General", "Volkneer", "Luxray", []),
+  "Aaron": Pair(5, True, "General", "Aaron", "Vespiquen", []),
+  "Bertha": Pair(5, True, "General", "Bertha", "Hippowdon", []),
+  "Lucian": Pair(5, True, "General", "Lucian", "Girafarig", []),
+  "Darach": Pair(5, True, "General", "Darach", "Staraptor", []),
+  "Hilbert": Pair(5, True, "General", "Hilbert", "Oshawott", []),
+  "Hilda": Pair(5, True, "General", "Hilda", "Tepig", []),
+  "Bianca": Pair(5, True, "General", "Bianca", "Musharna", []),
+  "Nate": Pair(5, True, "General", "Nate", "Braviary", []),
+  "Hugh": Pair(5, True, "General", "Hugh", "Buffalant", []),
+  "Lenora": Pair(5, True, "General", "Lenora", "Watchog", []),
+  "Burgh": Pair(5, True, "General", "Burgh", "Leavanny", []),
+  "Elesa": Pair(5, True, "General", "Elesa", "Zebstrika", []),
+  "SS Elesa":  Pair(5, True, "General", "Sygna Suit Elesa", "Rotom", ["SS Elesa","ss elesa"]),
+  "Caitlin": Pair(5, True, "General", "Caitlin", "Reuniclus", []),
+  "Grimsley": Pair(5, True, "General", "Grimsley", "Liepard", []),
+  "SS Grimsley": Pair(5, True, "General", "Sygna Suit Grimsley", "Sharpedo", ["SS Grimsley","ss grimsley"]),
+  "Colress": Pair(5, True, "General", "Colress", "Klinklang", []),
+  "Serena": Pair(5, True, "General", "Serena", "Fennekin", []),
+  "Tierno": Pair(5, True, "General", "Tierno", "Crawdaunt", []),
+  "Trevor": Pair(5, True, "General", "Trevor", "Florges", []),
+  "Shauna": Pair(5, True, "General", "Shauna", "Chesnaught", []),
+  "Clemont": Pair(5, True, "General", "Clemont", "Heliolisk", []),
+  "Olympia": Pair(5, True, "General", "Olympia", "Sigilyph", []),
+  "Malva": Pair(5, True, "General", "Malva", "Talonflame", []),
+  "Drasna": Pair(5, True, "General", "Drasna", "Dragalge", []),
+  "Looker": Pair(5, True, "General", "Looker", "Croagunk", []),
+  "Elio": Pair(5, True, "General", "Elio", "Popplio", []),
+  "Selene": Pair(5, True, "General", "Selene", "Rowlet", []),
+  "Lillie": Pair(5, True, "General", "Lillie", "Clefairy", []),
+  "Gladion": Pair(5, True, "General", "Gladion", "Silvally", []),
+  "Ilima": Pair(5, True, "General", "Ilima", "Gumshoos", []),
+  "Lana": Pair(5, True, "General", "Lana", "Araquanid", []),
+  "Kiawe": Pair(5, True, "General", "Kiawe", "Marowak-Alola", []),
+  "Mallow": Pair(5, True, "General", "Mallow", "Tsareena", []),
+  "Hala": Pair(5, True, "General", "Hala", "Crabominable", []),
+  "Olivia": Pair(5, True, "General", "Olivia", "Lycanroc-Midnight", []),
+  "K.Grimsley": Pair(5, True, "General", "Grimsley (Kimono)", "Bisharp", ["Grimsley Kimono","Grimsley Alt", "AltGrimsley", "KimonoGrimsley", "kimonoGrimsley", "AGrimsley"]),
+  "Ryuki": Pair(5, True, "General", "Ryuki", "Turtnator", []),
+  "Lusamine": Pair(5, True, "General", "Lusamine", "Pheromosa", []),
+  "Plumeria": Pair(5, True, "General", "Plumeria", "Salazzle", []),
+  "Guzma": Pair(5, True, "General", "Guzma", "Golisopod", []),
+  "Kukui": Pair(5, True, "General", "Kukui", "Lycanroc-Midday", []),
+  "A.Kukui": Pair(5, True, "General", "The Masked Royal", "Incineroar", ["AltKukui", "AKukui", "MaskedRoyal", "MaskKukui", "Masked Royal"]),
+  "Nessa": Pair(5, True, "General", "Nessa", "Drednaw", []),
+  "Bea": Pair(5, True, "General", "Bea", "Sirfetch'd", []),
+  "Allister": Pair(5, True, "General", "Allister", "Gengar", []),
+  "Gordie": Pair(5, True, "General", "Gordie", "Coalossal", []),
+  "Melony": Pair(5, True, "General", "Melony", "Lapras", []),
+  "Piers": Pair(5, True, "General", "Piers", "Obstagoon", []),
+  "Sonia": Pair(5, True, "General", "Sonia", "Yamper", [])
+}
+
+fiveStarSpotlight = list(fiveStarSpotlightDict.values())
 
 fiveStarPokeFairDict = {
   "Red": Pair(5, True, "Fair-Exclusive", "Red", "Snorlax", []),
@@ -378,7 +400,7 @@ fiveStarPokeFairDict = {
   "Emma": Pair(5, True, "Fair-Exclusive", "Emma", "Crobat", []),
   "Lysandre": Pair(5, True, "Fair-Exclusive", "Lysandre", "Yveltal", []),
   "SS Lysandre": Pair(5, True, "Fair-Exclusive", "Sygna Suit Lysandre", "Volcanion", ["SS Lysandre", "ss lysandre"]),
-  "Stakataka": Pair(5, True, "Fair-Exclusive", "Elio (Alt.)", "Stakataka", ["Alt Elio", "alt elio", "A.Elio"]),
+  "A.Elio": Pair(5, True, "Fair-Exclusive", "Elio (Alt.)", "Stakataka", ["Alt Elio", "alt elio", "A.Elio"]),
   "A.Selene": Pair(5, True, "Fair-Exclusive", "Selene (Alt.)", "Nihilego", ["Alt Selene", "alt selene", "A.Selene"]),
   "SS Hau": Pair(5, True, "Fair-Exclusive", "Sygna Suit Hau", "Tapu Koko", ["SS Hau", "ss hau"]),
   "SS Lana": Pair(5, True, "Fair-Exclusive", "Sygna Suit Lana", "Tapu Lele", ["SS Lana", "ss lana"]),
@@ -665,7 +687,7 @@ action = ""
 
 def searchForPair(text, banner):
   for i in range(len(banner.pairs)):
-    if text in banner.pairs[i].name and banner.pairs[i].nonick:
+    if text == banner.pairs[i].name and banner.pairs[i].nonick:
       return banner.pairs[i]
   for i in range(len(banner.pairs)):
     if text in banner.pairs[i].nick:
@@ -744,19 +766,19 @@ bannersDict = {
   "SS Iono": Banner("Sygna Suit Iono Poke Fair Scout", [fiveStarPokeFairDict["SS Iono"]], "pokeFair"),
   "SSA Elesa": Banner("Sygna Suit (Alt.) Elesa Poke Fair Scout", [fiveStarPokeFairDict["SSA Elesa"]], "pokeFair"),
   "NC Rosa": Banner("Rosa (Champion) Master Fair Scout", [fiveStarMasterFairDict["NC Rosa"]], "masterFair"),
-  "may_3xPF": Banner("Triple Feature Poke Fair Scout", [fiveStarPokeFairDict["Red"], fiveStarPokeFairDict["Gloria"], fiveStarPokeFairDict["Marnie"]], "3xPF"),
-  "may_2xSC": Banner("Double Feature Costume Scout", [specialCostumeDict["SC Adaman"], specialCostumeDict["SC Irida"]], "2xSC"),
+  "may25_3xPF": Banner("Triple Feature Poke Fair Scout", [fiveStarPokeFairDict["Red"], fiveStarPokeFairDict["Gloria"], fiveStarPokeFairDict["Marnie"]], "3xPF"),
+  "may25_2xSC": Banner("Double Feature Costume Scout", [specialCostumeDict["SC Adaman"], specialCostumeDict["SC Irida"]], "2xSC"),
   "SS Gladion": Banner("Sygna Suit Gladion Master Fair Scout", [fiveStarMasterFairDict["SS Gladion"]], "masterFair"),
   "V.Grimsley": Banner("Grimsley Variety Scout", [varietyDict["V.Grimsley"]], "variety"),
   "vol33": Banner("Vol. 33 Monthly Poke Fair Scout (Larry)", [fiveStarPokeFairDict["Larry"]], "pokeFair"),
   "SC Rei": Banner("Rei Costume Scout",[specialCostumeDict["SC Rei"]], "costume"),
   "Lacey": Banner("Lacey Poke Fair Scout", [fiveStarPokeFairDict["Lacey"]], "pokeFair"),
-  "Ilima": Banner("Ilima Spotlight Scout", [Pair(5, True, "General", "Ilima", "Gumshoos", [])], "spotlight"), # dictionary added later
+  "Ilima": Banner("Ilima Spotlight Scout", [fiveStarSpotlightDict["Ilima"]], "spotlight"),
   "apr_2xPF": Banner("Double Feature Poke Fair Scout", [fiveStarPokeFairDict["Rei"], fiveStarPokeFairDict["Akari"]], "2xPF"),
   "SC Marnie": Banner("Marnie Costume Scout",[specialCostumeDict['SC Marnie']], "costume"),
   "SC Morty": Banner("Morty Costume Scout",[specialCostumeDict["SC Morty"]], "costume"),
   "vol32": Banner("Vol. 32 Monthly Poke Fair Scout (Volo)", [fiveStarPokeFairDict["Volo"]],"pokeFair"),
-  "mar_3xMF": Banner("Triple Feature Master Fair Scout", [fiveStarMasterFairDict["Maxie"], fiveStarMasterFairDict["Archie"], fiveStarMasterFairDict["Leon"]], "3xMF"),
+  "mar25_3xMF": Banner("Triple Feature Master Fair Scout", [fiveStarMasterFairDict["Maxie"], fiveStarMasterFairDict["Archie"], fiveStarMasterFairDict["Leon"]], "3xMF"),
   "NC May": Banner("May (Champion) Master Fair Scout", [fiveStarMasterFairDict["NC May"]], "masterFair"),
   "NC Brendan": Banner("Brendan (Champion) Master Fair Scout", [fiveStarMasterFairDict["NC Brendan"]], "masterFair"),
   "anni Steven": Banner("Steven (Anniversary 2021) Master Fair Scout", [fiveStarMasterFairDict["anni Steven"]], "masterFair"),
@@ -768,9 +790,9 @@ bannersDict = {
   "pal Marley": Banner("Marley (Palentines' 2025) Seasonal Scout", [seasonalPalentinesDict["pal Marley"]], "seasonal"),
   "pal Erika": Banner("Erika (Palentines' 2025) Seasonal Scout", [seasonalPalentinesDict["pal Erika"]], "seasonal"),
   "palRerun": Banner("Super Spotlight Seasonal Scout (Palentines')", seasonalPalentines, "seasonalRerun"),
-  "feb_3xPF": Banner("Triple Feature Poke Fair Scout", [fiveStarPokeFairDict["SS Korrina"], fiveStarPokeFairDict["Eusine"], fiveStarPokeFairDict["Ingo"]], "3xPF"),
-  "feb_superScout": Banner("One-Time-Only Fair-Exclusive Guaranteed Scout", [fiveStarPokeFairDict["C.Elesa"], fiveStarPokeFairDict["SS Giovanni"], fiveStarPokeFairDict["Bede"], fiveStarPokeFairDict["Akari"], fiveStarPokeFairDict["Larry"]], "superScout"),
-  "feb_superSpotlight": Banner("Super Spotlight Poke Fair Scout", [fiveStarPokeFairDict["SS Diantha"], fiveStarPokeFairDict["SS Lysandre"], fiveStarPokeFairDict["Anabel"], fiveStarPokeFairDict["Emma"]], "superScout"),
+  "feb25_3xPF": Banner("Triple Feature Poke Fair Scout", [fiveStarPokeFairDict["SS Korrina"], fiveStarPokeFairDict["Eusine"], fiveStarPokeFairDict["Ingo"]], "3xPF"),
+  "feb25_superScout": Banner("One-Time-Only Fair-Exclusive Guaranteed Scout", [fiveStarPokeFairDict["C.Elesa"], fiveStarPokeFairDict["SS Giovanni"], fiveStarPokeFairDict["Bede"], fiveStarPokeFairDict["Akari"], fiveStarPokeFairDict["Larry"]], "superScout"),
+  "feb25_superSpotlight": Banner("Super Spotlight Poke Fair Scout", [fiveStarPokeFairDict["SS Diantha"], fiveStarPokeFairDict["SS Lysandre"], fiveStarPokeFairDict["Anabel"], fiveStarPokeFairDict["Emma"]], "superScout"),
   "Juliana": Banner("Juliana Master Fair Scout", [fiveStarMasterFairDict["Juliana"]], "masterFair"),
   "Florian": Banner("Florian Master Fair Scout", [fiveStarMasterFairDict["Florian"]], "masterFair"),
   "vol30": Banner("Vol. 30 Monthly Poke Fair Scout (Klara)", [fiveStarPokeFairDict["Klara"]], "pokeFair"),
@@ -779,12 +801,67 @@ bannersDict = {
   "NY Poppy": Banner("Poppy (New Year's 2025) Seasonal Scout", [seasonalNewYearDict["NY Poppy"]], "seasonal"),
   "NYRerun": Banner("Super Spotlight Seasonal Scout (New Year's)", seasonalNewYear, "seasonalRerun"),
   "rocketVariety": Banner("Team Rocket Variety Scout", [varietyDict["V.Archer"], varietyDict["V.Ariana"], varietyDict["V.Petrel"], varietyDict["V.Proton"], varietyDict["V.Giovanni"]], "variety"),
-  "jan_3xPF": Banner("Triple Feature Poke Fair Scout", [fiveStarPokeFairDict["Grusha"], fiveStarPokeFairDict["Paulo"], fiveStarPokeFairDict["SS Blue"]], "3xPF"),
+  "jan25_3xPF": Banner("Triple Feature Poke Fair Scout", [fiveStarPokeFairDict["Grusha"], fiveStarPokeFairDict["Paulo"], fiveStarPokeFairDict["SS Blue"]], "3xPF"),
   "Mela": Banner("Mela Poke Fair Scout", [fiveStarPokeFairDict["Mela"]], "pokeFair"),
   "Atticus": Banner("Atticus Poke Fair Scout", [fiveStarPokeFairDict["Atticus"]], "pokeFair"),
-  "jan_2xPF": Banner("Double Feature Poke Fair Scout", [fiveStarPokeFairDict["SS Piers"], fiveStarPokeFairDict["SS Roxie"]], "2xPF"),
+  "jan25_2xPF": Banner("Double Feature Poke Fair Scout", [fiveStarPokeFairDict["SS Piers"], fiveStarPokeFairDict["SS Roxie"]], "2xPF"),
   "anni N": Banner("N (Anniversary 2021) Master Fair Scout", [fiveStarMasterFairDict["anni N"]], "masterFair"),
-  "vol29": Banner("Vol. 29 Monthly Poke Fair Scout (Iono)", [fiveStarPokeFairDict["Iono"]], "pokeFair")
+  "vol29": Banner("Vol. 29 Monthly Poke Fair Scout (Iono)", [fiveStarPokeFairDict["Iono"]], "pokeFair"),
+  "ASLe": Banner("Arc Suit Leon Arc Suit Fair Scout", [fiveStarArcSuitFairDict["ASLe"]], "arcSuitFair"),
+  "Arven": Banner("Arven Poke Fair Scout", [fiveStarPokeFairDict["Arven"]], "pokeFair"),
+  "dec24_3xPF_A": Banner("Triple Feature Poke Fair Scout A", [fiveStarPokeFairDict["Chase"], fiveStarPokeFairDict["SS May"], fiveStarPokeFairDict["SS Cynthia"]], "3xPF"),
+  "dec24_3xPF_B": Banner("Triple Feature Poke Fair Scout B", [fiveStarPokeFairDict["Rika"], fiveStarPokeFairDict["anni May"], fiveStarPokeFairDict["N"]], "3xPF"),
+  "Milo": Banner("Milo Poke Fair Scout", [fiveStarPokeFairDict["Milo"]], "pokeFair"),
+  "dec24_3xV": Banner("Triple Feature Variety Scout", [varietyDict["V.Hop"], varietyDict["V.Marnie"], varietyDict["V.Bede"]], "3xV"),
+  "dec24_superCostume": Banner("Super Spotlight Costume Scout", [specialCostumeDict["SC Hilda"], specialCostumeDict["SC Diantha"], specialCostumeDict["SC Guzma"], specialCostumeDict["SC Jasmine"]], "superCostume"),
+  "h!Lillie": Banner("Lillie (Holiday 2024) Seasonal Scout", [seasonalHolidayDict["h!Lillie"]], "seasonal"),
+  "h!Bugsy": Banner("Bugsy (Holiday 2024) Seasonal Scout", [seasonalHolidayDict["h!Bugsy"]], "seasonal"),
+  "holiRerun": Banner("Super Spotlight Seasonal Scout (Holiday)", seasonalHoliday, "seasonalRerun"),
+  "NC Red": Banner("Red (Champion) Master Fair Scout", [fiveStarMasterFairDict["NC Red"]], "masterFair"),
+  "NC Leaf": Banner("Leaf (Champion) Master Fair Scout", [fiveStarMasterFairDict["NC Leaf"]], "masterFair"),
+  "NC Blue": Banner("Blue (Champion) Master Fair Scout", [fiveStarMasterFairDict["NC Blue"]], "masterFair"),
+  "dec24_2xPF": Banner("Double Feature Poke Fair Scout", [fiveStarPokeFairDict["A.Elio"], fiveStarPokeFairDict["A.Selene"]], "2xPF"),
+  "SS Red": Banner("Sygna Suit Red Poke Fair Scout", [fiveStarPokeFairDict["SS Red"]], "pokeFair"),
+  "SS Blue": Banner("Sygna Suit Blue Poke Fair Scout", [fiveStarPokeFairDict["SS Blue"]], "pokeFair"),
+  "SS Leaf": Banner("Sygna Suit Leaf Poke Fair Scout", [fiveStarPokeFairDict["SS Leaf"]], "pokeFair"),
+  "vol28": Banner("Vol. 28 Monthly Poke Fair Scout (Gloria)", [fiveStarPokeFairDict["Gloria"]], "pokeFair"),
+  "SS Ingo": Banner("Sygna Suit Ingo Poke Fair Scout", [fiveStarPokeFairDict["SS Ingo"]], "pokeFair"),
+  "SS Emmet": Banner("Sygna Suit Emmet Poke Fair Scout", [fiveStarPokeFairDict["SS Emmet"]], "pokeFair"),
+  "nov24_2xPF": Banner("Double Feature Poke Fair Scout", [fiveStarPokeFairDict["Ingo"], fiveStarPokeFairDict["Emmet"]], "2xPF"),
+  "Eri": Banner("Eri Poke Fair Scout", [fiveStarPokeFairDict["Eri"]], "pokeFair"),
+  "Sina": Banner("Sina Poke Fair Scout", [fiveStarPokeFairDict["Sina"]], "pokeFair"),
+  "Dexio": Banner("Dexio Poke Fair Scout", [fiveStarPokeFairDict["Dexio"]], "pokeFair"),
+  "nov24_3xV": Banner("Triple Feature Variety Scout", [varietyDict["V.Hilbert"], varietyDict["V.Hilda"], varietyDict["V.Calem"]], "3xV"),
+  "Adaman": Banner("Adaman Master Fair Scout", [fiveStarMasterFairDict["Adaman"]], "pokeFair"),
+  "nov24_superVariety": Banner("Super Spotlight Variety Scout", [varietyDict["V.Kris"], varietyDict["V.Lyra"], varietyDict["V.Lucas"], varietyDict["V.Selene"], varietyDict["V.Elio"]], "superVariety"),
+  "Irida": Banner("Irida Master Fair Scout", [fiveStarMasterFairDict["Irida"]], "pokeFair"),
+  "nov24_superScout": Banner("Super Spotlight Poke Fair Scout", [fiveStarPokeFairDict["Penny"], fiveStarPokeFairDict["Elaine"], fourStarDict["Tina"], fourStarDict["Rachel"]], "superScout"),
+  "vol27": Banner("Vol. 27 Monthly Poke Fair Scout (Steven)", [fiveStarPokeFairDict["Steven"]], "pokeFair"),
+  "Giacomo": Banner("Giacomo Poke Fair Scout", [fiveStarPokeFairDict["Giacomo"]], "pokeFair"),
+  "Clavell": Banner("Clavell Poke Fair Scout", [fiveStarPokeFairDict["Clavell"]], "pokeFair"),
+  "oct24_superScout": Banner("Super Spotlight Poke Fair Scout", [fiveStarPokeFairDict["SS Hau"], fiveStarPokeFairDict["SS Mina"], fiveStarPokeFairDict["SS Acerola"], fiveStarPokeFairDict["SS Lana"]], "superScout"),
+  "oct24_3xPF_A": Banner("Triple Feature Poke Fair Scout A", [fiveStarPokeFairDict["SS Roxie"], fiveStarPokeFairDict["SS N"], fiveStarPokeFairDict["Kabu"]], "3xPF"),
+  "oct24_3xPF_B": Banner("Triple Feature Poke Fair Scout B", [fiveStarPokeFairDict["SS Lysandre"], fiveStarPokeFairDict["Volo"], fiveStarPokeFairDict["Raihan"]], "3xPF"),
+  "oct24_3xPF_C": Banner("Triple Feature Poke Fair Scout C", [fiveStarPokeFairDict["Jacq"], fiveStarPokeFairDict["SS Silver"], fiveStarPokeFairDict["SS Leon"]], "3xPF"),
+  "oct24_3xPF": Banner("Triple Feature Poke Fair Scout", [fiveStarPokeFairDict["Iono"], fiveStarPokeFairDict["Dahlia"], fiveStarPokeFairDict["Diantha"]], "3xPF"),
+  "fa Iono": Banner("Iono (Fall 2024) Seasonal Scout", [seasonalFallDict["fa Iono"]], "seasonal"),
+  "fa Shauntal": Banner("Shauntal (Fall 2024) Seasonal Scout", [seasonalFallDict["fa Shauntal"]], "seasonal"),
+  "fallRerun": Banner("Super Spotlight Seasonal Scout (Fall)", seasonalFall, "seasonalRerun"),
+  "oct24_2xPF": Banner("Double Feature Poke Fair Scout", [fiveStarPokeFairDict["Palmer"], fiveStarPokeFairDict["Argenta"]], "2xPF"),
+  "SS Serena": Banner("Sygna Suit Serena Master Fair Scout", [fiveStarMasterFairDict["SS Serena"]], "masterFair"),
+  "vol26": Banner("Vol. 26 Monthly Poke Fair Scout (Lear)", [fiveStarPokeFairDict["Lear"]], "pokeFair"),
+  "ASC": Banner("Arc Suit Cynthia Arc Suit Fair Scout", [fiveStarArcSuitFairDict["ASC"]], "arcSuitFair"),
+  "ASS": Banner("Arc Suit Steven Arc Suit Fair Scout", [fiveStarArcSuitFairDict["ASS"]], "arcSuitFair"),
+  "ASL": Banner("Arc Suit Lance Arc Suit Fair Scout", [fiveStarArcSuitFairDict["ASL"]], "arcSuitFair"),
+  "sep24_3xPF": Banner("Triple Feature Poke Fair Scout", [fiveStarPokeFairDict["Rika"], fiveStarPokeFairDict["A.Leon"], fiveStarPokeFairDict["anni Raihan"]], "3xPF"),
+  "Malva": Banner("Malva Spotlight Scout", [fiveStarSpotlightDict["Malva"]], "spotlight"),
+  "Chuck": Banner("Chuck Spotlight Scout", [fiveStarSpotlightDict["Chuck"]], "spotlight"),
+  "Trevor": Banner("Trevor Spotlight Scout", [fiveStarSpotlightDict["Trevor"]], "spotlight"),
+  "SS Lear": Banner("Sygna Suit Lear Master Fair Scout", [fiveStarMasterFairDict["SS Lear"]], "masterFair"),
+  "sep24_2xV": Banner("Double Feature Variety Scout", [varietyDict["V.Sawyer"], varietyDict["V.Rachel"]], "2xV"),
+  "Lear": Banner("Lear Poke Fair Scout", [fiveStarPokeFairDict["Lear"]], "pokeFair"),
+  "SS Kris": Banner("Sygna Suit Kris Master Fair Scout", [fiveStarMasterFairDict["SS Kris"]], "masterFair"),
+  "vol25": Banner("Vol. 25 Monthly Poke Fair Scout (Lance)", [fiveStarPokeFairDict["Lance"]], "pokeFair")
 }
 
 gymBannersDict = {
@@ -847,6 +924,9 @@ def loopBanners(bannerList: list, newMonth: dict, oldest: str):
     dummyDict[str(i+1)] = bannerList[i]
     print(f"({i+1}) {bannerList[i].name}")
   print("BANNERS OLDER THAN " + oldest + " ARE YET TO BE AVAILABLE")
+  print("Select Scouts in Anniversary and Type-Exclusive Poke Fairs are yet to be available.")
+  print("If a banner appears multiple times in the span of the included dates, it will open appear ONCE in the most recent reran month in the list.")
+  print("If any banners are missing, feel free to message me on Discord / Reddit, or create a GitHub issue. Do include the featured pair(s), banner month, release month, and the banner type (if possible, include the rates of pulling the featured or 5*s.")
   print()
   print("--- MISC ---")
   print(f"(#) {cyan}Gym Scout(s){reset()}")
@@ -861,7 +941,7 @@ def startSim():
   print("----------------------------------------")
   print("Choose the banner you want to scout on:")
   print("--- MAY 2025 ---")
-  dummyDict = loopBanners(banners, {"SC Rei": "Apr 2025", "mar_3xMF": "Mar 2025 (5.5th Anni)", "pal Marley": "Feb 2025 (Pre-anni 5.5th) (Palentines' 2025)", "SSA Giovanni": "Jan 2025 (New Years' 2025)"}, "2025")
+  dummyDict = loopBanners(banners, {"SC Rei": "Apr 2025", "mar_3xMF": "Mar 2025 (5.5th Anni)", "pal Marley": "Feb 2025 (Pre-anni 5.5th) (Palentines' 2025)", "SSA Giovanni": "Jan 2025 (New Years' 2025)", "ASLe": "Dec 2024 (Holiday 2024)", "SS Ingo": "Nov 2024","Giacomo": "Oct 2024 (Fall 2024)", "ASC": "Sep 2024 (5th Anni)"}, "5th anni")
   target = input("Which banner do you want to scout on? \n> ")
   if target in list(dummyDict.keys()):
     bannerSelect(dummyDict[target])
@@ -881,7 +961,7 @@ def startSim():
 
 def menu():
   print(rainbow("Pokemon Masters EX - Pull Simulator Reborn"))
-  print("Version: v1.0.0")
+  print("Version: v2.1.0")
   print()
   print()
   print(bold + "(a) Start Simulation", reset())
@@ -896,7 +976,12 @@ def menu():
       startSim()
     case "s":
       print("----------------------------------------")
-      print("This is a work in progress. Please come back later.")
+      print("The current interval between singles is", pullInt, "seconds.")
+      print("Enter the new value: (only positive numbers are accepted)")
+      try:
+        pullInt = float(input("> "))
+      except ValueError:
+        print("Invalid input.")
     case "x":
       print("----------------------------------------")
       print("3* General Pool: 20/20 [COMPLETED]")
@@ -919,9 +1004,45 @@ def menu():
       print("Gym Scout: 6/6 [COMPLETED]")
     case "l":
       print("----------------------------------------")
-      print("[WILL ADD IN v2.1.0]")
-      print("v1.0.0")
-      print("- Initial release")
+      print(f"""
+      {bold}v2.1.0 - Past Banners Patch 1 [2025-05-22] {red}(LATEST){reset()}
+      - Added scouts from September to December 2024.
+      - Changed storage of the remaining spotlight pairs that remain stored in lists before this update, to dictionaries.
+      - Added the update log (which you're reading now).
+      - Changed the interval between singles from 0.1s to 0.2s. They are now customizable via Settings.
+      - Added settings.
+      - Fixed the bug of being unable to quit the software via the input "q".
+      - Fixed the issue of Selene (Alt.) being mistakenly named "Stakataka" in dictionary keys.
+      - Fixed the issue with pair searching when pitying.
+      - {rainbow("Happy Line 1000!")}{reset()} The simulator has reached 1000 lines of code!
+      
+      v2.0.2 - Emergency Patch 2 [2025-05-21]
+      - Fixed the issue of the rates of pulling an MF/AS.
+      - Fixed the issue of scout points not cleared after pitying.
+
+      v2.0.1 - Emergency Patch 1 [2025-05-19]
+      - Fixed the bug of being unable to pull any 5*s.
+      - Fixed pitying functionality.
+      - Fixed the but of being unable to pity.
+
+      v2.0.0 - The Supplementary Update (Not Disclosed) [2025-05-19]
+      - Changed storage of banners, now they are created only once, hence they have the memory of gem count.
+      - Added Mix Scout and Gym Scout.
+      - Added Variety sync pairs.
+      - Temporarily changed the interval between singles from 1s to 0.1s.
+      - Fixed Major Bug of “NC Rosa / SC Marnie / SC Morty” being referenced incorrectly as “SS Rosa / Marnie / Morty”.
+
+      v1.9.0 - The Special Costume Update [2025-05-18]
+      - Added SC pairs.
+      - Changed the storage type of sync pairs, from lists to dictionaries.
+      - Added scouts for February 2025.
+      - Fixed the Pokemon of the PF Victor being incorrect.
+
+      v1.0.0 - Release [2025-05-17]
+      - Initial release.
+      """)
+    case "q":
+      exit(0)
     case _:
       print("----------------------------------------")
       print("Invalid input. Please try again.") 
