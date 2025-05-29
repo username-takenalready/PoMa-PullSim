@@ -384,7 +384,7 @@ fiveStarPokeFairDict = {
   "C.Elesa": Pair(5, True, "Fair-Exclusive", "Elesa (Classic)", "Emolga", ["CElesa", "ClassicElesa", "Classic Elesa", "classicElesa", "AltElesa"]),
   "SSA Elesa": Pair(5, True, "Fair-Exclusive", "Sygna Suit (Alt.) Elesa", "Thundurus-Therian", ["SSA Elesa", "ssa elesa"]),
   "anni Skyla": Pair(5, True, "Fair-Exclusive", "Skyla (Anniversary 2022)", "Tornadus-Therian", ["anni skyla", "Anni Skyla", "anni Skyla", "anniSkyla", "AnniSkyla"]),
-  "C. Iris": Pair(5, True, "Fair-Exclusive", "Iris (Alt.)", "Hydreigon", ["C.Iris", "AltIris", "Alt Iris", "A.Iris","Iris alt", "Iris Alt", "Champion Iris", "Iris (Champion)"]),
+  "C.Iris": Pair(5, True, "Fair-Exclusive", "Iris (Alt.)", "Hydreigon", ["C.Iris", "AltIris", "Alt Iris", "A.Iris","Iris alt", "Iris Alt", "Champion Iris", "Iris (Champion)"]),
   "SS Roxie": Pair(5, True, "Fair-Exclusive", "Sygna Suit Roxie", "Toxtricity", ["SS Roxie", "ss roxie"]),
   "Alder": Pair(5, True, "Fair-Exclusive", "Alder", "Volcarona", []),
   "Ingo": Pair(5, True, "Fair-Exclusive", "Ingo", "Excadrill", ["submas 1", "submas white"]),
@@ -492,7 +492,9 @@ fiveStarMasterFairDict = {
   "Florian": Pair(5, True, "Master Fair", "Florian", "Miraidon", []),
   "Geeta": Pair(5, True, "Master Fair", "Geeta", "Glimmora", []),
   "Ash": Pair(5, True, "Master Fair", "Ash", "Pikachu", []),
-  "SS Lear": Pair(5, True, "Master Fair", "Sygna Suit Lear", "Gholdengo", ["SS Lear", "ss lear"])
+  "SS Lear": Pair(5, True, "Master Fair", "Sygna Suit Lear", "Gholdengo", ["SS Lear", "ss lear"]),
+  "NC Elio": Pair(5, True, "Master Fair", "Elio (Champion)", "Necrozma-Dusk-Mane", ["NC Elio", "nc elio"]),
+  "NC Selene": Pair(5, True, "Master Fair", "Selene (Champion)", "Necrozma-Dawn-Wings", ["NC Selene", "nc selene"])
 }
 
 fiveStarMasterFair = list(fiveStarMasterFairDict.values())
@@ -624,7 +626,9 @@ specialCostumeDict = {
   "SC Lillie": Pair(5, True, "Costume", "Lillie (Special Costume)", "Polteageist-Antique", ["SC Lillie", "sc lillie"]),
   "SC Guzma": Pair(5, True, "Costume", "Guzma (Special Costume)", "Buzzwole", ["SC Guzma", "sc guzma"]),
   "SC Marnie": Pair(5, True, "Costume", "Marnie (Academy)", "Cyclizar", ["SC Marnie", "sc marnie", "AcaMarnie", "acaMarnie", "acamarnie","Marnie Academy"]),
-  "SC Sonia": Pair(5, True, "Costume", "Sonia (Special Costume)", "Tsareena", ["SC Sonia", "sc sonia"])
+  "SC Sonia": Pair(5, True, "Costume", "Sonia (Special Costume)", "Tsareena", ["SC Sonia", "sc sonia"]),
+  "SC Larry": Pair(5, True, "Costume", "Larry (Special Costume)", "Flamigo}", ["SC Larry", "sc larry"]),
+  "Clive": Pair(5, True, "Costume", "Clive", "Amoonguss", []),
 }
 
 specialCostume = list(specialCostumeDict.values())
@@ -660,10 +664,13 @@ varietyDict = {
   "V2.Hop": Pair(5, True, "Variety", "Hop", "Zacian-Crowned", ["V2.Hop", "v2.hop"], True),
   "V.Marnie": Pair(5, True, "Variety", "Marnie", "Cinderace", ["V.Marnie", "v.marnie"], True),
   "V.Bede": Pair(5, True, "Variety", "Bede", "Inteleon", ["V.Bede", "v.bede"], True),
-  "V.Ball Guy": Pair(5, True, "Variety", "Ball Guy", "Amoonguss", ["V.Ball Guy", "v.ball guy"], True),
+  "Ball Guy": Pair(5, True, "Variety", "Ball Guy", "Amoonguss", ["Ball Guy", "ball guy"]),
   "V.Rachel": Pair(5, True, "Variety", "Rachel", "Gimmighoul-Roaming", ["V.Rachel", "v.rachel"], True),
   "V.Sawyer": Pair(5, True, "Variety", "Sawyer", "Gimmighoul-Chest", ["V.Sawyer", "v.sawyer"], True),
-  "V.Grimsley": Pair(5, True, "Variety", "Grimsley", "Absol", ["V.Grimsley", "v.grimsley"], True)
+  "V.Grimsley": Pair(5, True, "Variety", "Grimsley", "Absol", ["V.Grimsley", "v.grimsley"], True),
+  "Samson Oak": Pair(5, True, "Variety", "Samson Oak", "Exeggutor", ["Samson Oak", "S.Oak", "s.oak", "samson oak"]),
+  "V.Gordie": Pair(5, True, "Variety", "Gordie", "Barbaracle", ["V.Gordie", "v.gordie"], True),
+  "V.Melony": Pair(5, True, "Variety", "Melony", "Frosmoth", ["V.Melony", "v.melony"], True)
 }
 
 gymDict = {
@@ -762,6 +769,17 @@ def bannerSelect(banner: Banner):
     pass
 
 bannersDict = {
+  "NC Elio": Banner("Elio (Champion) Master Fair Scout", [fiveStarMasterFairDict["NC Elio"]], "masterFair"),
+  "NC Selene": Banner("Selene (Champion) Master Fair Scout", [fiveStarMasterFairDict["NC Selene"]], "masterFair"),
+  "jun25_superCostume": Banner("Super Spotlight Costume Scout", [specialCostumeDict["SC Barry"], specialCostumeDict["SC Selene"], specialCostumeDict["Belleba"], specialCostumeDict["Brycen-Man"]], "superCostume"),
+  "jun25_3xPF": Banner("Triple Feature Poke Fair Scout", [fiveStarPokeFairDict["C.Blue"], fiveStarPokeFairDict["SS Ingo"], fiveStarPokeFairDict["SS Dawn"]], "3xPF"),
+  "SC Larry": Banner("Larry Costume Scout", [specialCostumeDict["SC Larry"]], "costume"),
+  "Clive": Banner("Clive Costume Scout", [specialCostumeDict["Clive"]], "costume"),
+  "Samson Oak": Banner("Samson Oak Variety Scout", [varietyDict["Samson Oak"]], "variety"),
+  "V.Gordie": Banner("Gordie Variety Scout", [varietyDict["V.Gordie"]], "variety"),
+  "V.Melony": Banner("Melony Variety Scout", [varietyDict["V.Melony"]], "variety"),
+  "Geeta": Banner("Geeta Master Fair Scout", [fiveStarMasterFairDict["Geeta"]], "masterFair"),
+  "vol34": Banner("Vol. 34 Monthly Poke Fair Scout (Rika)", [fiveStarPokeFairDict["Rika"]], "pokeFair"),
   "SS Bede": Banner("Sygna Suit Bede Poke Fair Scout", [fiveStarPokeFairDict["SS Bede"]], "pokeFair"),
   "ASA": Banner("Arc Suit Alder Arc Suit Fair Scout", [fiveStarArcSuitFairDict["ASA"]], "arcSuitFair"),
   "Benga": Banner("Benga Poke Fair Scout", [fiveStarPokeFairDict["Benga"]], "pokeFair"),
@@ -863,7 +881,70 @@ bannersDict = {
   "sep24_2xV": Banner("Double Feature Variety Scout", [varietyDict["V.Sawyer"], varietyDict["V.Rachel"]], "2xV"),
   "Lear": Banner("Lear Poke Fair Scout", [fiveStarPokeFairDict["Lear"]], "pokeFair"),
   "SS Kris": Banner("Sygna Suit Kris Master Fair Scout", [fiveStarMasterFairDict["SS Kris"]], "masterFair"),
-  "vol25": Banner("Vol. 25 Monthly Poke Fair Scout (Lance)", [fiveStarPokeFairDict["Lance"]], "pokeFair")
+  "vol25": Banner("Vol. 25 Monthly Poke Fair Scout (Lance)", [fiveStarPokeFairDict["Lance"]], "pokeFair"),
+  "A.Elio": Banner("Elio (Alt.) Poke Fair Scout", [fiveStarPokeFairDict["A.Elio"]], "pokeFair"),
+  "A.Selene": Banner("Selene (Alt.) Poke Fair Scout", [fiveStarPokeFairDict["A.Selene"]], "pokeFair"),
+  "aug24_3xPF": Banner("Triple Feature Poke Fair Scout", [fiveStarPokeFairDict["C.Iris"], fiveStarPokeFairDict["SS Diantha"], fiveStarPokeFairDict["Emma"]], "3xPF"),
+  "aug24_2xPF": Banner("Double Feature Poke Fair Scout", [fiveStarPokeFairDict["SS Dawn"], fiveStarPokeFairDict["Lucas"]], "2xPF"),
+  "Arven": Banner("Arven Poke Fair Scout", [fiveStarPokeFairDict["Arven"]], "pokeFair"),
+  "Penny": Banner("Penny Poke Fair Scout", [fiveStarPokeFairDict["Penny"]], "pokeFair"),
+  "SS Nemona": Banner("Sygna Suit Nemona Master Fair Scout", [fiveStarMasterFairDict["SS Nemona"]], "masterFair"),
+  "NC Marnie": Banner("Marnie (Champion) Master Fair Scout", [fiveStarMasterFairDict["NC Marnie"]], "masterFair"),
+  "NC Hop": Banner("Hop (Champion) Master Fair Scout", [fiveStarMasterFairDict["NC Hop"]], "masterFair"),
+  "NC Bede": Banner("Bede (Champion) Master Fair Scout", [fiveStarMasterFairDict["NC Bede"]], "masterFair"),
+  "vol24": Banner("Vol. 24 Monthly Poke Fair Scout (N)", [fiveStarPokeFairDict["N"]], "pokeFair"),
+  "sum Gardenia": Banner("Gardenia (Summer 2024) Seasonal Scout", [seasonalSummerDict["sum Gardenia"]], "seasonal"),
+  "sum Acerola": Banner("Acerola (Summer 2024) Seasonal Scout", [seasonalSummerDict["sum Acerola"]], "seasonal"),
+  "sumRerun": Banner("Super Spotlight Seasonal Scout (Summer)", seasonalSummer, "seasonalRerun"),
+  "jul24_2xPF_A": Banner("Double Feature Poke Fair Scout", [fiveStarPokeFairDict["SS Cyrus"], fiveStarPokeFairDict["Akari"]], "2xPF"),
+  "Klara": Banner("Klara Poke Fair Scout", [fiveStarPokeFairDict["Klara"]], "pokeFair"),
+  "Avery": Banner("Avery Poke Fair Scout", [fiveStarPokeFairDict["Avery"]], "pokeFair"),
+  "Greta": Banner("Greta Poke Fair Scout", [fiveStarPokeFairDict["Greta"]], "pokeFair"),
+  "jul24_2xPF_B": Banner("Double Feature Poke Fair Scout", [fiveStarPokeFairDict["SS Brendan"], fiveStarPokeFairDict["SS Steven"]], "2xPF"),
+  "SS Lyra": Banner("Sygna Suit Lyra Master Fair Scout", [fiveStarMasterFairDict["SS Lyra"]], "masterFair"),
+  "vol23": Banner("Vol. 23 Monthly Poke Fair Scout (Cynthia)", [fiveStarPokeFairDict["Cynthia"]], "pokeFair"),
+  "NC Cheren": Banner("Cheren (Champion) Master Fair Scout", [fiveStarMasterFairDict["NC Cheren"]], "masterFair"),
+  "NC Bianca": Banner("Bianca (Champion) Master Fair Scout", [fiveStarMasterFairDict["NC Bianca"]], "masterFair"),
+  "Ball Guy": Banner("Ball Guy Variety Scout", [varietyDict["Ball Guy"]], "variety"),
+  "jun24_3xPF_A": Banner("Triple Feature Poke Fair Scout", [fiveStarPokeFairDict["SS Korrina"], fiveStarPokeFairDict["SS Lana"], fiveStarPokeFairDict["Argenta"]], "3xPF"),
+  "Larry": Banner("Larry Poke Fair Scout", [fiveStarPokeFairDict["Larry"]], "pokeFair"),
+  "Kabu": Banner("Kabu Poke Fair Scout", [fiveStarPokeFairDict["Kabu"]], "pokeFair"),
+  "jun24_3xPF_B": Banner("Triple Feature Poke Fair Scout", [fiveStarPokeFairDict["Red"], fiveStarPokeFairDict["Anabel"], fiveStarPokeFairDict["Elaine"]], "3xPF"),
+  "SS Ethan": Banner("Sygna Suit Ethan Master Fair Scout", [fiveStarMasterFairDict["SS Ethan"]], "masterFair"),
+  "vol22": Banner("Vol. 22 Monthly Poke Fair Scout (Marnie)", [fiveStarPokeFairDict["Marnie"]], "pokeFair"),
+  "Archie": Banner("Archie Master Fair Scout", [fiveStarMasterFairDict["Archie"]], "masterFair"),
+  "Rika": Banner("Rika Poke Fair Scout", [fiveStarPokeFairDict["Rika"]], "pokeFair"),
+  "may24_3xPF_A": Banner("Triple Feature Poke Fair Scout A", [fiveStarPokeFairDict["anni Skyla"], fiveStarPokeFairDict["SS Hilbert"], fiveStarPokeFairDict["SS Hau"]], "3xPF"),
+  "may24_3xPF_B": Banner("Triple Feature Poke Fair Scout B", [fiveStarPokeFairDict["C.Blue"], fiveStarPokeFairDict["Palmer"], fiveStarPokeFairDict["SS Lysandre"]], "3xPF"),
+  "may24_3xPF_C": Banner("Triple Feature Poke Fair Scout C", [fiveStarPokeFairDict["Emmet"], fiveStarPokeFairDict["SS Giovanni"], fiveStarPokeFairDict["D.Gloria"]], "3xPF"),
+  "Brycen-Man": Banner("Brycen-Man Costume Scout", [specialCostumeDict["Brycen-Man"]], "costume"),
+  "Belleba": Banner("Belleba Costume Scout", [specialCostumeDict["Belleba"]], "costume"),
+  "SS Morty": Banner("Sygna Suit Morty Poke Fair Scout", [fiveStarPokeFairDict["SS Morty"]], "pokeFair"),
+  "may24_2xPF_A": Banner("Double Feature Poke Fair Scout", [fiveStarPokeFairDict["SS Wally"], fiveStarPokeFairDict["Bede"]], "2xPF"),
+  "V.Guzma": Banner("Guzma Variety Scout", [varietyDict["V.Guzma"]], "variety"),
+  "V.Plumeria": Banner("Plumeria Variety Scout", [varietyDict["V.Plumeria"]], "variety"),
+  "Poppy": Banner("Poppy Poke Fair Scout", [fiveStarPokeFairDict["Poppy"]], "pokeFair"),
+  "may24_2xPF_B": Banner("Double Feature Poke Fair Scout", [fiveStarPokeFairDict["SS Silver"], fiveStarPokeFairDict["Eusine"]], "2xPF"),
+  "Maxie": Banner("Maxie Master Fair Scout", [fiveStarMasterFairDict["Maxie"]], "masterFair"),
+  "vol21": Banner("Vol. 21 Monthly Poke Fair Scout (Raihan)", [fiveStarPokeFairDict["Raihan"]], "pokeFair"),
+  "Volo": Banner("Volo Poke Fair Scout", [fiveStarPokeFairDict["Volo"]], "pokeFair"),
+  "Jacq": Banner("Jacq Poke Fair Scout", [fiveStarPokeFairDict["Jacq"]], "pokeFair"),
+  "apr24_3xPF_A": Banner("Triple Feature Poke Fair Scout", [fiveStarPokeFairDict["C.Elesa"], fiveStarPokeFairDict["Lysandre"], fiveStarPokeFairDict["Emma"]], "3xPF"),
+  "apr24_3xPF_B": Banner("Triple Feature Poke Fair Scout", [fiveStarPokeFairDict["SS Red"], fiveStarPokeFairDict["SS Hilda"], fiveStarPokeFairDict["SS May"]], "3xPF"),
+  "SC Barry": Banner("Barry Costume Scout", [specialCostumeDict["SC Barry"]], "costume"),
+  "SC Selene": Banner("Selene Costume Scout", [specialCostumeDict["SC Selene"]], "costume"),
+  "apr24_superVariety": Banner("Super Spotlight Variety Scout", [varietyDict["V.Lorelei"], varietyDict["V.Bruno"], varietyDict["V.Agatha"], varietyDict["V.Lance"]], "superVariety"),
+  "vol20": Banner("Vol. 20 Monthly Poke Fair Scout (Gloria)", [fiveStarPokeFairDict["Gloria"]], "pokeFair"),
+  # geeta debut here
+  "NC Silver": Banner("Silver (Champion) Master Fair Scout", [fiveStarMasterFairDict["NC Silver"]], "masterFair"),
+  "mar24_2xPF_A": Banner("Double Feature Poke Fair Scout", [fiveStarPokeFairDict["SS Dawn"], fiveStarPokeFairDict["anni May"]], "2xPF"),
+  "SC Adaman": Banner("Adaman Costume Scout", [specialCostumeDict["SC Adaman"]], "costume"),
+  "SC Irida": Banner("Irida Costume Scout", [specialCostumeDict["SC Irida"]], "costume"),
+  "Tierno": Banner("Tierno Spotlight Scout", [fiveStarSpotlightDict["Tierno"]], "spotlight"),
+  "mar24_2xPF_B": Banner("Double Feature Poke Fair Scout", [fiveStarPokeFairDict["Rose"], fiveStarPokeFairDict["Oleana"]], "2xPF"),
+  "Dahlia": Banner("Dahlia Poke Fair Scout", [fiveStarPokeFairDict["Dahlia"]], "pokeFair"),
+  "SSR Cynthia": Banner("Sygna Suit (Renegade) Cynthia Master Fair Scout", [fiveStarMasterFairDict["SSR Cynthia"]], "masterFair"),
+  "vol19": Banner("Vol. 19 Monthly Poke Fair Scout (Steven)", [fiveStarPokeFairDict["Steven"]], "pokeFair")
 }
 
 gymBannersDict = {
@@ -882,7 +963,7 @@ mixBannersDict = {
 def gymScout():
   print("----------------------------------------")
   print("Choose the gym scout you want to scout on:")
-  print("--- MAY 2025 ---")
+  # print("--- MAY 2025 ---")
   print("(A) Brock, Winona & Grusha")
   print("(B) Whitney, Korrina & Kabu")
   print("Due to technical limitations, a gym scout will have a pool as if it was reran at the present time. It is not possible to simulate the pool of the gym scout at the time of its release (yet).")
@@ -895,7 +976,7 @@ def gymScout():
 def mixScout():
   print("----------------------------------------")
   print("Choose the mix scout you want to scout on:")
-  print("--- MAY 2025 ---")
+  # print("--- MAY 2025 ---")
   print("(a) Red")
   print("(b) Blue")
   print("(c) Leaf")
@@ -942,8 +1023,8 @@ def loopBanners(bannerList: list, newMonth: dict, oldest: str):
 def startSim():
   print("----------------------------------------")
   print("Choose the banner you want to scout on:")
-  print("--- MAY 2025 ---")
-  dummyDict = loopBanners(banners, {"SC Rei": "Apr 2025", "mar_3xMF": "Mar 2025 (5.5th Anni)", "pal Marley": "Feb 2025 (Pre-anni 5.5th) (Palentines' 2025)", "SSA Giovanni": "Jan 2025 (New Years' 2025)", "ASLe": "Dec 2024 (Holiday 2024)", "SS Ingo": "Nov 2024","Giacomo": "Oct 2024 (Fall 2024)", "ASC": "Sep 2024 (5th Anni)"}, "5th anni")
+  print("--- JUN 2025 ---")
+  dummyDict = loopBanners(banners, {"SS Bede": "MAY 2025", "SC Rei": "APR 2025", "mar_3xMF": "MAR 2025 (5.5th Anni)", "pal Marley": "FEB 2025 (Pre-anni 5.5th) (Palentines' 2025)", "SSA Giovanni": "JAN 2025 (New Years' 2025)", "ASLe": "DEC 2024 (Holiday 2024)", "SS Ingo": "NOV 2024","Giacomo": "OCT 2024 (Fall 2024)", "ASC": "SEP 2024 (5th Anni)", "A.Elio": "AUG 2024 (Pre-anni 5th)", "sum Gardenia": "JUL 2024 (Summer 2024)", "NC Cheren": "JUN 2024", "Archie": "MAY 2024", "Volo": "APR 2024", "NC Silver": "MAR 2024 (4.5th Anni)"}, "4.5th Anni")
   target = input("Which banner do you want to scout on? \n> ")
   if target in list(dummyDict.keys()):
     bannerSelect(dummyDict[target])
@@ -979,6 +1060,7 @@ def menu():
     case "a":
       startSim()
     case "s":
+      global pullInt
       print("----------------------------------------")
       print("The current interval between singles is", pullInt, "seconds.")
       print("Enter the new value: (only positive numbers are accepted)")
@@ -1009,7 +1091,12 @@ def menu():
     case "l":
       print("----------------------------------------")
       print(f"""
-      {bold}v2.1.0 - Past Banners Patch 1 [2025-05-22] {red}(LATEST){reset()}
+      {bold}v2.2.0 - June Datamine Update [2025-05-29] {red}(LATEST){reset()}
+      - Added pairs and scouts from game version v2.57.0 (June 2025).
+      - Added scouts from March to September 2024.
+      - Fixed bug of being unable to change settings.
+      
+      v2.1.0 - Past Banners Patch 1 [2025-05-22]
       - Added scouts from September to December 2024.
       - Changed storage of the remaining spotlight pairs that remain stored in lists before this update, to dictionaries.
       - Added the update log (which you're reading now).
