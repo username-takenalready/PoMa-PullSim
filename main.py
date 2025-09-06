@@ -29,57 +29,56 @@ def stars2color(stars):
     return yellow
 
 def type2color(type):
-  match type:
-    case "pokeFair":
-      return blue
-    case "2xPF":
-      return blue
-    case "3xPF":
-      return blue
-    case "ticket":
-      return blue
-    case "masterFair":
-      return magenta
-    case "EXMF":
-      return magenta
-    case "3xMF":
-      return magenta
-    case 'ticketM':
-      return magenta
-    case "arcSuitFair":
-      return yellow
-    case "spotlight":
-      return brown
-    case "3xSP":
-      return brown
-    case "mix":
-      return red
-    case "variety":
-      return red
-    case "2xV":
-      return red
-    case "3xV":
-      return red
-    case "superVariety":
-      return red
-    case "seasonal":
-      return green
-    case "seasonalRerun":
-      return green
-    case "2xSE":
-      return green
-    case "costume":
-      return green
-    case "superCostume":
-      return green
-    case "2xSC":
-      return green
-    case "gym":
-      return cyan
-    case "daily":
-      return cyan
-    case _:
-      return reset()
+      if type == "pokeFair":
+        return blue
+      elif type == "2xPF":
+        return blue
+      elif type == "3xPF":
+        return blue
+      elif type == "ticket":
+        return blue
+      elif type == "masterFair":
+        return magenta
+      elif type == "EXMF":
+        return magenta
+      elif type == "3xMF":
+        return magenta
+      elif type == 'ticketM':
+        return magenta
+      elif type == "arcSuitFair":
+        return yellow
+      elif type == "spotlight":
+        return brown
+      elif type == "3xSP":
+        return brown
+      elif type == "mix":
+        return red
+      elif type == "variety":
+        return red
+      elif type == "2xV":
+        return red
+      elif type == "3xV":
+        return red
+      elif type == "superVariety":
+        return red
+      elif type == "seasonal":
+        return green
+      elif type == "seasonalRerun":
+        return green
+      elif type == "2xSE":
+        return green
+      elif type == "costume":
+        return green
+      elif type == "superCostume":
+        return green
+      elif type == "2xSC":
+        return green
+      elif type == "gym":
+        return cyan
+      elif type == "daily":
+        return cyan
+      else:
+        return reset()
     
 def rainbow(text):
   str = [bold]
@@ -1185,10 +1184,10 @@ def gymScout():
   print("(A) Brock, Winona & Grusha")
   print("(B) Whitney, Korrina & Kabu")
   print("Due to technical limitations, a gym scout will have a pool as if it was reran at the present time. It is not possible to simulate the pool of the gym scout at the time of its release (yet).")
-  match input("Which gym scout do you want to scout on? \n> "):
-    case "A":
+  user_input = input("Which gym scout do you want to scout on? \n> ")
+  if user_input == "A":
       bannerSelect(gymBannersDict["A"])
-    case "B":
+  elif user_input == "B":
       bannerSelect(gymBannersDict["B"])
 
 def mixScout():
@@ -1286,22 +1285,21 @@ def startSim():
   if target in list(dummyDict.keys()):
     bannerSelect(dummyDict[target])
   else:
-    match target:
-      case "#":
+    if target == "#":
         gymScout()
-      case "!":
+    elif target == "!":
         mixScout()
-      case "@":
+    elif target == "@":
         bannerSelect(Banner("Daily Scout", [], "daily", dailyPool = True))
-      case "$":
+    elif target == "$":
         bannerSelect(Banner("5* Guaranteed Ticket Scout", [], "pokeFair", fiveStarOnly = True))
-      case "&":
+    elif target == "&":
         bannerSelect(Banner("Fair-Guaranteed Ticket Scout", [], "fairTicket"))
-      case "%":
+    elif target == "%":
         bannerSelect(Banner("Fair-exclusive pairs included! 10-pair Scout", [fiveStarPokeFair], "10ticket"))
-      case "^":
+    elif target == "^":
         bannerSelect(Banner("Six-Year Anniversary Ticket Scout", [], "anniTicket"))
-      case _:
+    else:
         print("Invalid input. Please try again.")
     
 
@@ -1318,99 +1316,99 @@ def menu():
   print("(q) Quit")
   print()
   print("Tip: Scouting is too slow/fast? Change it in settings!")
-  action = input("> ")
-  match action:
-    case "a":
-      startSim()
-    case "s":
-      global pullInt
-      print("----------------------------------------")
-      print("The current interval between singles is", pullInt, "seconds.")
-      print("Enter the new value: (only positive numbers are accepted)")
-      try:
-        pullInt = float(input("> "))
-      except ValueError:
-        print("Invalid input.")
-    case "x":
-      print("----------------------------------------")
-      print("3* General Pool: 20/20 [COMPLETED]")
-      print("3* Story: 0/?? ")
-      print("4* General Pool: 19/19")
-      print("4* Story: 0/??")
-      print("4* Poke Fair: 3/3 [COMPLETED]")
-      print("5* General Pool: 75/75 [COMPLETED]")
-      print("5* Story: 0/??")
-      print("5* Poke Fair: 97/97 [COMPLETED]")
-      print("5* Event Exclusive: 0/??")
-      print("5* BP: 0/??")
-      print("5* Variety: 34/34 [COMPLETED]")
-      print("5* Damage Challenge: 0/??")
-      print("5* Seasonal: 54/54 [COMPLETED]")
-      print("5* Mix: 5/5 [COMPLETED]")
-      print("5* Special Costume: 22/22 [COMPLETED]")
-      print("5* Master Fair: 39/39 [COMPLETED]")
-      print("5* Arc Suit Fair: 8/8 [COMPLETED]")
-      print("5* EX Master Fair: 4/4 [COMPLETED]")
-      print("Gym Scout: 6/6 [COMPLETED]")
-    case "l":
-      print("----------------------------------------")
-      print(f"""
-      {bold}v3.0.0 - Sixth Anniversary Returning Update [2025-09-06] {red}(LATEST){reset()}
-      - {rainbow("Long time no see, and I'm back!")}
-      - Added pairs and scouts from game version v2.58.0 to v2.60.0 (July to September 2025).
-      - Added scouts from March 2023 to February 2024. (Yes you heard that right. 12 MONTHS, 100+ BANNERS.)
-      - New banner type: EX Master Fair.
-      - Every scoutable pair now has EX (since the anniversary update)
-      - Seasonal Reruns are now separate from other banners for more convenience.
-      - Fixed spelling mistakes ("Syncamore" -> "Sycamore") ("Falkneer" -> "Falkner")
-      - Added Fair-included ticket scout and sixth anni ticket scout.
+  if True:
+      action = input("> ")
+      if action == "a":
+        startSim()
+      elif action == "s":
+        global pullInt
+        print("----------------------------------------")
+        print("The current interval between singles is", pullInt, "seconds.")
+        print("Enter the new value: (only positive numbers are accepted)")
+        try:
+          pullInt = float(input("> "))
+        except ValueError:
+          print("Invalid input.")
+      elif action == "x":
+        print("----------------------------------------")
+        print("3* General Pool: 20/20 [COMPLETED]")
+        print("3* Story: 0/?? ")
+        print("4* General Pool: 19/19")
+        print("4* Story: 0/??")
+        print("4* Poke Fair: 3/3 [COMPLETED]")
+        print("5* General Pool: 75/75 [COMPLETED]")
+        print("5* Story: 0/??")
+        print("5* Poke Fair: 97/97 [COMPLETED]")
+        print("5* Event Exclusive: 0/??")
+        print("5* BP: 0/??")
+        print("5* Variety: 34/34 [COMPLETED]")
+        print("5* Damage Challenge: 0/??")
+        print("5* Seasonal: 54/54 [COMPLETED]")
+        print("5* Mix: 5/5 [COMPLETED]")
+        print("5* Special Costume: 22/22 [COMPLETED]")
+        print("5* Master Fair: 39/39 [COMPLETED]")
+        print("5* Arc Suit Fair: 8/8 [COMPLETED]")
+        print("5* EX Master Fair: 4/4 [COMPLETED]")
+        print("Gym Scout: 6/6 [COMPLETED]")
+      elif action == "l":
+        print("----------------------------------------")
+        print(f"""
+          {bold}v3.0.0 - Sixth Anniversary Returning Update [2025-09-06] {red}(LATEST){reset()}
+          - {rainbow("Long time no see, and I'm back!")}
+          - Added pairs and scouts from game version v2.58.0 to v2.60.0 (July to September 2025).
+          - Added scouts from March 2023 to February 2024. (Yes you heard that right. 12 MONTHS, 100+ BANNERS.)
+          - New banner type: EX Master Fair.
+          - Every scoutable pair now has EX (since the anniversary update)
+          - Seasonal Reruns are now separate from other banners for more convenience.
+          - Fixed spelling mistakes ("Syncamore" -> "Sycamore") ("Falkneer" -> "Falkner")
+          - Added Fair-included ticket scout and sixth anni ticket scout.
 
-      v2.2.0 - June Datamine Update [2025-05-29]
-      - Added pairs and scouts from game version v2.57.0 (June 2025).
-      - Added scouts from March to September 2024.
-      - Fixed bug of being unable to change settings.
-      
-      v2.1.0 - Past Banners Patch 1 [2025-05-22]
-      - Added scouts from September to December 2024.
-      - Changed storage of the remaining spotlight pairs that remain stored in lists before this update, to dictionaries.
-      - Added the update log (which you're reading now).
-      - Changed the interval between singles from 0.1s to 0.2s. They are now customizable via Settings.
-      - Added settings.
-      - Fixed the bug of being unable to quit the software via the input "q".
-      - Fixed the issue of Selene (Alt.) being mistakenly named "Stakataka" in dictionary keys.
-      - Fixed the issue with pair searching when pitying.
-      - {rainbow("Happy Line 1000!")}{reset()} The simulator has reached 1000 lines of code!
-      
-      v2.0.2 - Emergency Patch 2 [2025-05-21]
-      - Fixed the issue of the rates of pulling an MF/AS.
-      - Fixed the issue of scout points not cleared after pitying.
+          v2.2.0 - June Datamine Update [2025-05-29]
+          - Added pairs and scouts from game version v2.57.0 (June 2025).
+          - Added scouts from March to September 2024.
+          - Fixed bug of being unable to change settings.
 
-      v2.0.1 - Emergency Patch 1 [2025-05-19]
-      - Fixed the bug of being unable to pull any 5*s.
-      - Fixed pitying functionality.
-      - Fixed the but of being unable to pity.
+          v2.1.0 - Past Banners Patch 1 [2025-05-22]
+          - Added scouts from September to December 2024.
+          - Changed storage of the remaining spotlight pairs that remain stored in lists before this update, to dictionaries.
+          - Added the update log (which you're reading now).
+          - Changed the interval between singles from 0.1s to 0.2s. They are now customizable via Settings.
+          - Added settings.
+          - Fixed the bug of being unable to quit the software via the input "q".
+          - Fixed the issue of Selene (Alt.) being mistakenly named "Stakataka" in dictionary keys.
+          - Fixed the issue with pair searching when pitying.
+          - {rainbow("Happy Line 1000!")}{reset()} The simulator has reached 1000 lines of code!
 
-      v2.0.0 - The Supplementary Update (Not Disclosed) [2025-05-19]
-      - Changed storage of banners, now they are created only once, hence they have the memory of gem count.
-      - Added Mix Scout and Gym Scout.
-      - Added Variety sync pairs.
-      - Temporarily changed the interval between singles from 1s to 0.1s.
-      - Fixed Major Bug of “NC Rosa / SC Marnie / SC Morty” being referenced incorrectly as “SS Rosa / Marnie / Morty”.
+          v2.0.2 - Emergency Patch 2 [2025-05-21]
+          - Fixed the issue of the rates of pulling an MF/AS.
+          - Fixed the issue of scout points not cleared after pitying.
 
-      v1.9.0 - The Special Costume Update [2025-05-18]
-      - Added SC pairs.
-      - Changed the storage type of sync pairs, from lists to dictionaries.
-      - Added scouts for February 2025.
-      - Fixed the Pokemon of the PF Victor being incorrect.
+          v2.0.1 - Emergency Patch 1 [2025-05-19]
+          - Fixed the bug of being unable to pull any 5*s.
+          - Fixed pitying functionality.
+          - Fixed the but of being unable to pity.
 
-      v1.0.0 - Release [2025-05-17]
-      - Initial release.
-      """)
-    case "q":
-      exit(0)
-    case _:
-      print("----------------------------------------")
-      print("Invalid input. Please try again.") 
+          v2.0.0 - The Supplementary Update (Not Disclosed) [2025-05-19]
+          - Changed storage of banners, now they are created only once, hence they have the memory of gem count.
+          - Added Mix Scout and Gym Scout.
+          - Added Variety sync pairs.
+          - Temporarily changed the interval between singles from 1s to 0.1s.
+          - Fixed Major Bug of "NC Rosa / SC Marnie / SC Morty" being referenced incorrectly as "SS Rosa / Marnie / Morty".
+
+          v1.9.0 - The Special Costume Update [2025-05-18]
+          - Added SC pairs.
+          - Changed the storage type of sync pairs, from lists to dictionaries.
+          - Added scouts for February 2025.
+          - Fixed the Pokemon of the PF Victor being incorrect.
+
+          v1.0.0 - Release [2025-05-17]
+          - Initial release.
+          """)
+      elif action == "q":
+        exit(0)
+      else:
+        print("----------------------------------------")
+        print("Invalid input. Please try again.")
   print()
   awaitEnter()
   clear()
