@@ -1191,7 +1191,7 @@ def gymScout():
       bannerSelect(gymBannersDict["A"])
   elif user_input == "B":
       bannerSelect(gymBannersDict["B"])
-    case "C":
+  elif user_input == "C":
       bannerSelect(gymBannersDict["C"])
 
 def mixScout():
@@ -1204,18 +1204,18 @@ def mixScout():
   print("(d) Lucas")
   print("(e) Dawn")
   print("Due to technical limitations, a mix scout will have a pool as if it was reran at the present time. It is not possible to simulate the pool of the mix scout at the time of its release (yet).")
-  match input("Which mix scout do you want to scout on? \n> "):
-    case "a":
+  mixtarget = input("Which mix scout do you want to scout on? \n> "):
+  if mixtarget == "a":
       bannerSelect(mixBannersDict["a"])
-    case "b":
+  if mixtarget == "b":
       bannerSelect(mixBannersDict["b"])
-    case "c":
+  if mixtarget == "c":
       bannerSelect(mixBannersDict["c"])
-    case "d":
+  if mixtarget == "d":
       bannerSelect(mixBannersDict["d"])
-    case "e":
+  if mixtarget == "e":
       bannerSelect(mixBannersDict["e"])
-    case "f":
+  if mixtarget == "f":
       bannerSelect(mixBannersDict["f"])
     case _:
       print("Invalid input. Please try again.")
