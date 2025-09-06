@@ -1167,7 +1167,8 @@ bannersDict = {
 
 gymBannersDict = {
   "A": Banner("Gym Scout (A)", gymList[:3], "gym"),
-  "B": Banner("Gym Scout (B)", gymList[3:], "gym")
+  "B": Banner("Gym Scout (B)", gymList[3:6], "gym"),
+  "C": Banner("Gym Scout (C)", gymList[6:], "gym")
 }
 
 mixBannersDict = {
@@ -1185,12 +1186,15 @@ def gymScout():
   # print("--- MAY 2025 ---")
   print("(A) Brock, Winona & Grusha")
   print("(B) Whitney, Korrina & Kabu")
+  print("(C) Roxie, Fantina & Lana")
   print("Due to technical limitations, a gym scout will have a pool as if it was reran at the present time. It is not possible to simulate the pool of the gym scout at the time of its release (yet).")
   match input("Which gym scout do you want to scout on? \n> "):
     case "A":
       bannerSelect(gymBannersDict["A"])
     case "B":
       bannerSelect(gymBannersDict["B"])
+    case "C":
+      bannerSelect(gymBannersDict["C"])
 
 def mixScout():
   print("----------------------------------------")
