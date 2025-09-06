@@ -21,13 +21,12 @@ rainbowList = [red, yellow, green, blue, cyan, magenta]
 pullInt = 0.2
 
 def stars2color(stars):
-  match stars:
-    case 3:
-      return brown
-    case 4:
-      return grey
-    case 5:
-      return yellow
+  if stars == 3:
+    return brown
+  elif stars == 4:
+    return grey
+  elif stars == 5:
+    return yellow
 
 def type2color(type):
   match type:
