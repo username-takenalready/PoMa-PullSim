@@ -802,34 +802,34 @@ def bannerSelect(banner: Banner):
       banner.multis = 0
       banner.singles = 0
     return
-  match input('> '):
-    case "x":
+  action = input('> '):
+  if action == "x":
       scouted = banner.single()
       print(rainbow(scouted.literal()) if scouted in banner.featuredPairs else scouted.__str__())
-    case "3":
+  if action == "3":
       for i in range(3):
         scouted = banner.single()
         print(rainbow(scouted.literal()) if scouted in banner.featuredPairs else scouted.__str__())
-    case "5":
+  if action == "5":
       for i in range(5):
         scouted = banner.single()
         print(rainbow(scouted.literal()) if scouted in banner.featuredPairs else scouted.__str__())
-    case "10":
+  if action == "10":
       for i in range(10):
         scouted = banner.single()
         print(rainbow(scouted.literal()) if scouted in banner.featuredPairs else scouted.__str__())
-    case "a":
+  if action == "a":
       banner.multi()
-    case "b":
+  if action == "b":
       pass
-    case "z":
+  if action == "z":
       for i in range(12 if not banner.type == "arcSuitFair" else 15):
         banner.multi()
       scouted = banner.single()
       print(rainbow(scouted.literal()) if scouted in banner.featuredPairs else scouted.__str__())
       scouted = banner.single()
       print(rainbow(scouted.literal()) if scouted in banner.featuredPairs else scouted.__str__())
-    case _:
+  else:
       print("Invalid input. ")
   awaitEnter()
   if input("Do you want to scout again on this banner? (y/n) \n> ") == "y":
@@ -1204,7 +1204,7 @@ def mixScout():
   print("(d) Lucas")
   print("(e) Dawn")
   print("Due to technical limitations, a mix scout will have a pool as if it was reran at the present time. It is not possible to simulate the pool of the mix scout at the time of its release (yet).")
-  mixtarget = input("Which mix scout do you want to scout on? \n> "):
+  mixtarget = input("Which mix scout do you want to scout on? \n> ")
   if mixtarget == "a":
       bannerSelect(mixBannersDict["a"])
   if mixtarget == "b":
@@ -1217,7 +1217,7 @@ def mixScout():
       bannerSelect(mixBannersDict["e"])
   if mixtarget == "f":
       bannerSelect(mixBannersDict["f"])
-    case _:
+  else:
       print("Invalid input. Please try again.")
 banners = list(bannersDict.values())
 bannerNames = list(bannersDict.keys())
