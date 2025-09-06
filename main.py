@@ -802,7 +802,7 @@ def bannerSelect(banner: Banner):
       banner.multis = 0
       banner.singles = 0
     return
-  action = input('> '):
+  action = input('> ')
   if action == "x":
       scouted = banner.single()
       print(rainbow(scouted.literal()) if scouted in banner.featuredPairs else scouted.__str__())
