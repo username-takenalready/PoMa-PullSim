@@ -542,7 +542,7 @@ fiveStarMasterFairDict = {
   "A25 Red": Pair(5, True, "Master Fair", "Red (Anniversary 2025)", "Charizard", ["A25 Red", "a25 red"]),
   "A25 Irida": Pair(5, True, "Master Fair", "Irida (Anniversary 2025)", "Typhlosion-Hisui", ["A25 Irida", "a25 irida"]),
   "A25 Gloria": Pair(5, True, "Master Fair", "Gloria (Anniversary 2025)", "Cinderace", ["A25 Gloria", "a25 gloria"]),
-  "A Volo": Pair(5, True, "Master Fair", "Volo (Alt.)", "Giratina", ["A Volo", "a volo", "Alt Volo", "alt volo"])
+  "A.Volo": Pair(5, True, "Master Fair", "Volo (Alt.)", "Giratina", ["A.Volo", "a.volo", "Alt Volo", "alt volo"])
 }
 
 fiveStarMasterFair = list(fiveStarMasterFairDict.values())
@@ -845,7 +845,7 @@ bannersDict = {
   "A25 Gloria": Banner("Gloria (Anniversary 2025) EX Master Fair", [fiveStarMasterFairDict["A25 Gloria"]], "EXMF", featured2 = [fiveStarPokeFairDict["A.Selene"], fiveStarPokeFairDict["C.Blue"]]),
   "vol37": Banner("Vol. 37 Monthly Poke Fair Scout (Marnie)", [fiveStarPokeFairDict["Marnie"]], "pokeFair"),
   "sep25_3xV": Banner("Triple Feature Variety Scout", [varietyDict["V2.Hilda"], varietyDict["V2.Hilbert"], varietyDict["V.N"]], "3xV"),
-  "A Volo": Banner("Volo (Alt.) EX Master Fair", [fiveStarMasterFairDict["A Volo"]], "EXMF"),
+  "A.Volo": Banner("Volo (Alt.) EX Master Fair", [fiveStarMasterFairDict["A.Volo"]], "EXMF", featured2 = [fiveStarPokeFairDict["Rei"], fiveStarPokeFairDict["Akari"]]),
   # Rei (Academy) rerun
   # Lacey rerun
   "sep25_3xMF": Banner("Triple Feature Master Fair Scout", [fiveStarMasterFairDict["SSR Cynthia"], fiveStarMasterFairDict["NC Bede"], fiveStarMasterFairDict["SS Nemona"]], "3xMF"),
