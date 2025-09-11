@@ -195,7 +195,7 @@ class Banner:
     elif genPool:
       self.pool5 = fiveStarSpotlight
     if self.type == "anniTicket":
-      self.pool5 = fiveStarPokeFair + seasonalFull + specialCostume + variety
+      self.pool5 = fiveStarPokeFair + seasonalFull + specialCostume + variety + fiveStarSpotlight
     if dailyPool:
       self.featuredPairs = fiveStarMasterFair + fiveStarArcSuitFair + seasonalFull + fiveStarPokeFair + specialCostume + variety + mixExclusive
 
@@ -301,7 +301,7 @@ fourStarDict = {
   "Wikstrom": Pair(4, True, "General", "Wikstrom", "Aegislash", []),
   "Sophocles": Pair(4, True, "General", "Sophocles", "Togedemaru", []),
   "Rachel": Pair(4, True, "Fair-Exclusive", "Rachel", "Umbreon", []),
-  "Honchkrow": Pair(4, True, "Fair-Exclusive", "Sawyer", "Honchkrow", []),
+  "Sawyer": Pair(4, True, "Fair-Exclusive", "Sawyer", "Honchkrow", []),
   "Tina": Pair(4, True, "Fair-Exclusive", "Tina", "Flareon", []),
   "Whitney": Pair(4, True, "General", "Whitney", "Miltank", []),
   "Gardenia": Pair(4, True, "General", "Gardenia", "Roserade", []),
@@ -1157,6 +1157,55 @@ bannersDict = {
   # Ball Guy rerun/debut idk
   "Lance": Banner("Lance Poke Fair Scout", [fiveStarPokeFairDict["Lance"]], "pokeFair"),
   "mar23_2xPF": Banner("Double Feature Poke Fair Scout (Eon Duo Banner)", [fiveStarPokeFairDict["anni May"], fiveStarPokeFairDict["SS Brendan"]], "2xPF"),
+  "pal Mallow": Banner("Mallow (Palentines' 2023) Seasonal Scout", [seasonalPalentinesDict["pal Mallow"]], "seasonal"),
+  "vol6": Banner("Vol. 6 Monthly Poke Fair Scout (N)", [fiveStarPokeFairDict["N"]], "pokeFair"),
+  "pal Elesa": Banner("Elesa (Palentines' 2023) Seasonal Scout", [seasonalPalentinesDict["pal Elesa"]], "seasonal"),
+  "SS Lysandre": Banner("Sygna Suit Lysandre Poke Fair Scout", [fiveStarPokeFairDict["SS Lysandre"]], "pokeFair"),
+  "Anabel": Banner("Anabel Poke Fair Scout", [fiveStarPokeFairDict["Anabel"]], "pokeFair"),
+  "Emma": Banner("Emma Poke Fair Scout", [fiveStarPokeFairDict["Emma"]], "pokeFair"),
+  # Leon rerun
+  "Marnie": Banner("Marnie Poke Fair Scout", [fiveStarPokeFairDict["Marnie"]], "pokeFair"),
+  "feb23_3xPF_A": Banner("Triple Feature Poke Fair Scout A", [fiveStarPokeFairDict["Cynthia"], fiveStarPokeFairDict["C.Iris"], fiveStarPokeFairDict["Lance"]], "3xPF"),
+  "feb23_3xPF_B": Banner("Triple Feature Poke Fair Scout B", [fiveStarPokeFairDict["Alder"], fiveStarPokeFairDict["Steven"], fiveStarPokeFairDict["Diantha"]], "3xPF"),
+  "vol5": Banner("Vol. 5 Monthly Poke Fair Scout (Cynthia)", [fiveStarPokeFairDict["Cynthia"]], "pokeFair"),
+  "NY Dawn": Banner("Dawn (New Year's 2023) Seasonal Scout", [seasonalNewYearDict["NY Dawn"]], "seasonal"),
+  "NY Lisia": Banner("Lisia (New Year's 2023) Seasonal Scout", [seasonalNewYearDict["NY Lisia"]], "seasonal"),
+  "SS Diantha": Banner("Sygna Suit Diantha Poke Fair Scout", [fiveStarPokeFairDict["SS Diantha"]], "pokeFair"),
+  "Shauna": Banner("Shauna Spotlight Scout", [fiveStarSpotlightDict["Shauna"]], "spotlight"),
+  "jan23_3xPF": Banner("Triple Feature Poke Fair Scout", [fiveStarPokeFairDict["Diantha"], fiveStarPokeFairDict["Gloria"], fiveStarPokeFairDict["C.Iris"]], "3xPF"),
+  # Bede debut
+  # NC Serena debut!!!
+  "vol4": Banner("Vol. 4 Monthly Poke Fair Scout (Marnie)", [fiveStarPokeFairDict["Marnie"]], "pokeFair"),
+  # NC Calem debut
+  # SS Leaf rerun/debut idk
+  "h!Jasmine": Banner("Jasmine (Holiday 2022) Seasonal Scout", [seasonalHolidayDict["h!Jasmine"]], "seasonal"),
+  "h!Whitney": Banner("Whitney (Holiday 2022) Seasonal Scout", [seasonalHolidayDict["h!Whitney"]], "seasonal"),
+  # anni Lillie rerun
+  # anni N rerun
+  # anni Steven rerun
+  "SS Hilda": Banner("Sygna Suit Hilda Poke Fair Scout", [fiveStarPokeFairDict["SS Hilda"]], "pokeFair"),
+  "vol3": Banner("Vol. 3 Monthly Poke Fair Scout (N)", [fiveStarPokeFairDict["N"]], "pokeFair"),
+  "SS Hilbert": Banner("Sygna Suit Hilbert Poke Fair Scout", [fiveStarPokeFairDict["SS Hilbert"]], "pokeFair"),
+  "Hugh": Banner("Hugh Spotlight Scout", [fiveStarSpotlightDict["Hugh"]], "spotlight"),
+  # SS N debut
+  "Colress": Banner("Colress Spotlight Scout", [fiveStarSpotlightDict["Colress"]], "spotlight"),
+  "nov22_3xV": Banner("Triple Feature Variety Scout", [varietyDict["V.Lyra"], varietyDict["V.Lucas"], varietyDict["V.Kris"]], "3xV"),
+  "nov22_3xPF": Banner("Triple Feature Poke Fair Scout", [fiveStarPokeFairDict["Lysandre"], fiveStarPokeFairDict["Marnie"], fiveStarPokeFairDict["SS Blue"]], "3xPF"), #TYPE!
+  # SS Wally debut
+  "vol2": Banner("Vol. 2 Monthly Poke Fair Scout (Raihan)", [fiveStarPokeFairDict["Raihan"]], "pokeFair"),
+  "Gordie": Banner("Gordie Spotlight Scout", [fiveStarSpotlightDict["Gordie"]], "spotlight"),
+  "Melony": Banner("Melony Spotlight Scout", [fiveStarSpotlightDict["Melony"]], "spotlight"),
+  # Victor debut
+  "fa Iris": Banner("Iris (Fall 2022) Seasonal Scout", [seasonalFallDict["fa Iris"]], "seasonal"),
+  "fa Allister": Banner("Allister (Fall 2022) Seasonal Scout", [seasonalFallDict["fa Allister"]], "seasonal"),
+  "vol1": Banner("Vol. 1 Monthly Poke Fair Scout (Cynthia)", [fiveStarPokeFairDict["Cynthia"]], "pokeFair"),
+  "Ash": Banner("[REDACTED] Master Fair Scout", [fiveStarMasterFairDict["Ash"]], "masterFair"),
+  # SSA Cynthia debut
+  # SST Red debut
+  # Super Spotlight Costume - WIP
+  # SC Rosa debut
+  "sep22_3xPF": Banner("Triple Feature Poke Fair Scout", [fiveStarPokeFairDict["Lear"], fourStarDict["Sawyer"], fourStarDict["Rachel"]], "3xPF"),
+  "sep22_3xPF_2": Banner("Triple Feature Poke Fair Scout", [fiveStarPokeFairDict["Alder"], fiveStarPokeFairDict["SS Cynthia"], fiveStarPokeFairDict["SS Red"]], "3xPF"), # TYPE: Dragon, Bug, Fire
   # SEASONAL RERUNS VVV
   "holiRerun": Banner("Super Spotlight Seasonal Scout (Holiday)", seasonalHoliday, "seasonalRerun"),
   "fallRerun": Banner("Super Spotlight Seasonal Scout (Fall)", seasonalFall, "seasonalRerun"),
@@ -1205,6 +1254,7 @@ def mixScout():
   print("(c) Leaf")
   print("(d) Lucas")
   print("(e) Dawn")
+  print("(f) Barry")
   print("Due to technical limitations, a mix scout will have a pool as if it was reran at the present time. It is not possible to simulate the pool of the mix scout at the time of its release (yet).")
   match input("Which mix scout do you want to scout on? \n> "):
     case "a":
@@ -1230,7 +1280,10 @@ def loopBanners(bannerList: list, newMonth: dict, oldest: str):
     if bannerNames[i] in list(newMonth.keys()):
       print(f"--- {newMonth[bannerNames[i]]} ---")
     dummyDict[str(i+1)] = bannerList[i]
-    print(f"({i+1}) {bannerList[i].name}")
+    if "Feature" in bannerList[i].name:
+      print(f"({i+1}) {bannerList[i].name} ({', '.join([j.name for j in bannerList[i].featuredPairs])})")
+    else:
+      print(f"({i+1}) {bannerList[i].name}")
   print("BANNERS OLDER THAN " + oldest + " ARE YET TO BE AVAILABLE")
   print("Select Scouts in Anniversary and Type-Exclusive Poke Fairs (which will act as Regular PF banners if they have featured PFs) are yet to be available.")
   print("If a banner appears multiple times in the span of the included dates, it will open appear ONCE in the most recent reran month in the list.")
@@ -1272,7 +1325,7 @@ def startSim():
     "Archie": "MAY 2024",
     "Volo": "APR 2024",
     "NC Silver": "MAR 2024 (4.5th Anni)",
-    "Chase": "FEB 2024 (Pre-anni 4.5th)",
+    "Chase": "FEB 2024 (Pre-anni 4.5th) (Palentines' 2024)",
     "SSA Cynthia": "JAN 2024 (New Years' 2024)",
     "vol16": "DEC 2023 (Holiday 2023)",
     "SS Roxie": "NOV 2023",
@@ -1284,9 +1337,15 @@ def startSim():
     "SS Hau": "MAY 2023",
     "SC Steven": "APR 2023",
     "vol7": "MAR 2023 (3.5th anni)",
+    "pal Mallow": "FEB 2023 (Pre-anni 3.5th) (Palentines' 2023)",
+    "vol5": "JAN 2023 (New Years' 2023)",
+    "vol4": "DEC 2022 (Holiday 2022)",
+    "SS Hilda": "NOV 2022",
+    "vol2": "OCT 2022 (Fall 2022)",
+    "vol1": "SEP 2022 (3rd anni)",
     "holiRerun": f"{green}SEASONAL RERUNS{reset()}"
-  }, "3.5th Anni")
-  print(red + "NOTE - There is not enough data for the 'Fifty million downloads Poke Fair Scout' or 'Fashion Week Limited Scout' to be included in the list" + reset())
+  }, "3rd Anni")
+  print(red + "NOTE - There is not enough data for the 'Fifty million downloads Poke Fair Scout', 'Fashion Week Limited Scout' or 'Super Spotlight Costume Scout' (September 2022) to be included in the list" + reset())
   target = input("Which banner do you want to scout on? \n> ")
   if target in list(dummyDict.keys()):
     bannerSelect(dummyDict[target])
@@ -1312,7 +1371,7 @@ def startSim():
 
 def menu():
   print(rainbow("Pokemon Masters EX - Pull Simulator Reborn"))
-  print("Version: v3.0.0")
+  print("Version: v3.1.0")
   print()
   print()
   print(bold + "(a) Start Simulation", reset())
@@ -1360,7 +1419,17 @@ def menu():
     case "l":
       print("----------------------------------------")
       print(f"""
-      {bold}v3.0.0 - Sixth Anniversary Returning Update [2025-09-06] {red}(LATEST){reset()}
+      {bold}v3.1.0 - Past Banners Patch 2 [2025-09-11] {red}(LATEST){reset()} 
+      - Added scouts from September 2022 to February 2023. (Yes, even [REDACTED]!)
+      - Banners featuring multiple units will now show the featured units next to their name.
+      - Fixed the bug of spotlights not existing in Anni Ticket's pool.
+      - Fixed visual bug of Barry Mix Scout not showing.
+      - Fixed typo ("Honchkrow" -> "Sawyer")
+      
+      v3.0.1 - Emergency Patch 3 [2025-09-06]
+      - Fixed the bug of being unable to scout on the Gym Scout C banner.
+      
+      v3.0.0 - Sixth Anniversary Returning Update [2025-09-06]
       - {rainbow("Long time no see, and I'm back!")}
       - Added pairs and scouts from game version v2.58.0 to v2.60.0 (July to September 2025).
       - Added scouts from March 2023 to February 2024. (Yes you heard that right. 12 MONTHS, 100+ BANNERS.)
@@ -1393,7 +1462,7 @@ def menu():
       v2.0.1 - Emergency Patch 1 [2025-05-19]
       - Fixed the bug of being unable to pull any 5*s.
       - Fixed pitying functionality.
-      - Fixed the but of being unable to pity.
+      - Fixed the bug of being unable to pity.
 
       v2.0.0 - The Supplementary Update (Not Disclosed) [2025-05-19]
       - Changed storage of banners, now they are created only once, hence they have the memory of gem count.
